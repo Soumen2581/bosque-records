@@ -1,0 +1,114 @@
+name: 💡 Feature Request
+description: Suggest a new feature or improvement
+title: "[Feature]: "
+labels: ["enhancement", "triage"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 💡 Feature Request
+
+        Have an idea for a new feature? We'd love to hear it! Please fill out this form to help us evaluate and prioritize your suggestion.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Feature Summary
+      description: A brief summary of the feature
+      placeholder: |
+        In one sentence, what is this feature?
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or Motivation
+      description: What problem does this solve? Why do you need this feature?
+      placeholder: |
+        I want this feature because...
+        Currently, I have to...
+        This would help me/us to...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: How should this feature work?
+      placeholder: |
+        The feature should...
+        When the user does X, the system should do Y...
+        This could be implemented by...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Any alternative solutions you've considered?
+      placeholder: |
+        I've considered...
+        But this approach has issues because...
+    validations:
+      required: false
+
+  - type: textarea
+    id: mockups
+    attributes:
+      label: Mockups / Examples
+      description: If applicable, add mockups, wireframes, or examples
+      placeholder: |
+        [Describe or attach mockups]
+        Example reference: [Link to similar feature]
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this feature?
+      options:
+        - Low - Nice to have, no rush
+        - Medium - Would improve UX significantly
+        - High - Blocked without this
+        - Critical - Must have for next release
+    validations:
+      required: true
+
+  - type: dropdown
+    id: complexity
+    attributes:
+      label: Complexity
+      description: How complex is this to implement?
+      options:
+        - Unknown
+        - Low - Small change, few files
+        - Medium - Moderate effort, multiple components
+        - High - Significant effort, major changes
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Any other context about this feature request
+      placeholder: |
+        Additional information...
+        Related issues: #
+        Related discussions: #
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true

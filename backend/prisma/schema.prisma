@@ -1,0 +1,127 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Release {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  description String?
+  releaseDate DateTime
+  coverImage  String
+  featured    Boolean  @default(false)
+  price       Float?
+  artistId    String
+  artist      Artist   @relation(fields: [artistId], references: [id])
+  tracks      Track[]
+  tags        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("releases")
+}
+
+model Artist {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique
+  bio         String?
+  avatar      String?
+  socialLinks String?
+  releases    Release[]
+  events      Event[]   @relation("EventArtists")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  @@map("artists")
+}
+
+model Track {
+  id        String  @id @default(cuid())
+  title     String
+  duration  Int     // in seconds
+  audioFile String?
+  preview   String? // preview URL
+  order     Int
+  releaseId String
+  release   Release @relation(fields: [releaseId], references: [id], onDelete: Cascade)
+  
+  @@map("tracks")
+}
+
+model Event {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  description String?
+  date        DateTime
+  endDate     DateTime?
+  location    String
+  venue       String?
+  image       String?
+  ticketUrl   String?
+  featured    Boolean   @default(false)
+  artists     Artist[]  @relation("EventArtists")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  @@map("events")
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  price       Float
+  images      String
+  category    String
+  inStock     Boolean  @default(true)
+  quantity    Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("products")
+}
+
+model Booking {
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  phone       String?
+  eventType   String
+  date        DateTime
+  message     String?
+  status      String   @default("pending") // pending, confirmed, declined
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@map("bookings")
+}
+
+model Newsletter {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  
+  @@map("newsletter")
+}
+
+model Artwork {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  imageUrl    String
+  artist      String
+  category    String
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  
+  @@map("artworks")
+} 

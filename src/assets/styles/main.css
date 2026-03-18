@@ -1,0 +1,313 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&display=swap');
+
+/* Organic easing curves - nature-inspired */
+:root {
+  --ease-organic: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-forest: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-growth: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-sway: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-flow: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+@layer base {
+  * {
+    scroll-behavior: smooth;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: 'IM Fell English', serif;
+    color: #e5e5e5;
+    margin: 0;
+    overflow-x: hidden;
+    /* Organic smooth scrolling */
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Smooth scroll with organic easing */
+  @supports (scroll-behavior: smooth) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+}
+
+@layer components {
+  .title-font {
+    font-family: 'IM Fell English SC', serif;
+  }
+  
+  .nav-link {
+    position: relative;
+    transition: all 0.4s var(--ease-forest);
+  }
+  
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background: linear-gradient(90deg, #14331e 0%, #d4af37 50%, #14331e 100%);
+    transition: width 0.5s var(--ease-growth);
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+  }
+  
+  .nav-link:hover {
+    transform: translateY(-2px);
+  }
+  
+  .nav-link:hover::after {
+    width: 100%;
+    box-shadow: 0 0 12px rgba(212, 175, 55, 0.8);
+  }
+  
+  /* Organic glow effect - breathing animation */
+  .hover-glow {
+    transition: all 0.6s var(--ease-flow);
+    position: relative;
+  }
+  
+  .hover-glow::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: inherit;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.3) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.6s var(--ease-flow);
+    z-index: -1;
+    animation: organic-breathe 4s ease-in-out infinite;
+  }
+  
+  .hover-glow:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 8px 32px rgba(212, 175, 55, 0.4), 
+                0 4px 16px rgba(20, 51, 30, 0.3);
+  }
+  
+  .hover-glow:hover::before {
+    opacity: 1;
+  }
+  
+  /* Mystical divider with organic animation */
+  .mystical-divider {
+    border-top: 1px solid #14331e;
+    border-bottom: 1px solid #d4af37;
+    height: 0;
+    margin: 2rem 0;
+    position: relative;
+    opacity: 0.8;
+  }
+  
+  .mystical-divider::before {
+    content: '✧';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0a0a0a;
+    padding: 0 10px;
+    color: #d4af37;
+    font-size: 1.2rem;
+    animation: gentle-sway 6s ease-in-out infinite;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+  }
+  
+  .mystical-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 1px;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      rgba(212, 175, 55, 0.3) 20%, 
+      rgba(212, 175, 55, 0.6) 50%, 
+      rgba(212, 175, 55, 0.3) 80%, 
+      transparent 100%);
+    animation: organic-glow 3s ease-in-out infinite;
+  }
+  
+  /* Album cover with organic scale and parallax */
+  .album-cover {
+    transition: all 0.6s var(--ease-growth);
+    will-change: transform;
+  }
+  
+  .album-cover:hover {
+    transform: scale(1.08) translateY(-4px);
+    box-shadow: 0 12px 40px rgba(20, 51, 30, 0.5),
+                0 4px 16px rgba(212, 175, 55, 0.3);
+  }
+  
+  /* Organic fade-in for content */
+  .fade-in {
+    animation: organic-fade-in 1s var(--ease-growth) forwards;
+    opacity: 0;
+  }
+  
+  .fade-in-delay-1 { animation-delay: 0.1s; }
+  .fade-in-delay-2 { animation-delay: 0.2s; }
+  .fade-in-delay-3 { animation-delay: 0.3s; }
+  .fade-in-delay-4 { animation-delay: 0.4s; }
+  
+  /* Organic slide-up animation */
+  .slide-up {
+    animation: organic-slide-up 0.8s var(--ease-growth) forwards;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  
+  /* Floating/breathing effect for elements */
+  .organic-float {
+    animation: organic-float 6s ease-in-out infinite;
+  }
+  
+  .organic-float-delayed {
+    animation: organic-float 6s ease-in-out infinite;
+    animation-delay: 1s;
+  }
+  
+  /* Organic growth animation */
+  .organic-grow {
+    animation: organic-grow 0.8s var(--ease-growth) forwards;
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  
+  /* Forest sway animation */
+  .forest-sway {
+    animation: forest-sway 8s ease-in-out infinite;
+    transform-origin: center bottom;
+  }
+  
+  /* Gentle pulse - like breathing */
+  .organic-pulse {
+    animation: organic-pulse 4s ease-in-out infinite;
+  }
+}
+
+/* Organic keyframe animations */
+@keyframes organic-breathe {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.6;
+  }
+}
+
+@keyframes gentle-sway {
+  0%, 100% {
+    transform: translateX(-50%) rotate(-2deg);
+  }
+  50% {
+    transform: translateX(-50%) rotate(2deg);
+  }
+}
+
+@keyframes organic-glow {
+  0%, 100% {
+    opacity: 0.3;
+    width: 80px;
+  }
+  50% {
+    opacity: 0.8;
+    width: 120px;
+  }
+}
+
+@keyframes organic-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes organic-slide-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes organic-float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+  66% {
+    transform: translateY(-4px) rotate(-1deg);
+  }
+}
+
+@keyframes organic-grow {
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes forest-sway {
+  0%, 100% {
+    transform: rotate(-1deg);
+  }
+  50% {
+    transform: rotate(1deg);
+  }
+}
+
+@keyframes organic-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.02);
+  }
+}
+
+/* Parallax utility classes */
+.parallax-slow {
+  transition: transform 0.8s var(--ease-flow);
+}
+
+.parallax-fast {
+  transition: transform 0.4s var(--ease-flow);
+}
+
+/* Smooth organic transitions for all interactive elements */
+button, a, [role="button"] {
+  transition: all 0.4s var(--ease-forest);
+}
+
+button:hover, a:hover, [role="button"]:hover {
+  transform: translateY(-2px);
+}
+
+button:active, a:active, [role="button"]:active {
+  transform: translateY(0);
+  transition: all 0.2s var(--ease-flow);
+} 

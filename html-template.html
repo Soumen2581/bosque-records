@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bosque Records | Dark Forest Psytrance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&display=swap');
+        
+        body {
+            font-family: 'IM Fell English', serif;
+            color: #e5e5e5;
+            margin: 0;
+            overflow: hidden;
+        }
+        
+        .title-font {
+            font-family: 'IM Fell English SC', serif;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #d4af37;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .gold-text {
+            color: #d4af37;
+        }
+        
+        .green-text {
+            color: #14331e;
+        }
+        
+        .gold-border {
+            border-color: #d4af37;
+        }
+        
+        .green-border {
+            border-color: #14331e;
+        }
+        
+        .hover-glow:hover {
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+        
+        .mystical-divider {
+            border-top: 1px solid #14331e;
+            border-bottom: 1px solid #d4af37;
+            height: 0;
+            margin: 2rem 0;
+            position: relative;
+        }
+        
+        .mystical-divider::before {
+            content: '✧';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #0a0a0a;
+            padding: 0 10px;
+            color: #d4af37;
+            font-size: 1.2rem;
+        }
+        
+        .album-cover {
+            transition: transform 0.3s ease;
+        }
+        
+        .album-cover:hover {
+            transform: scale(1.05);
+        }
+        
+        .forest-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2314331e' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-black bg-opacity-90 border-b border-green-800 sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="text-3xl title-font gold-text mr-2">✧</div>
+                    <h1 class="text-2xl title-font tracking-wider">
+                        <span class="text-white">BOSQUE</span>
+                        <span class="gold-text">RECORDS</span>
+                    </h1>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-white focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="nav-link text-gray-300 hover:text-white">Home</a>
+                    <a href="#" class="nav-link text-gray-300 hover:text-white">About</a>
+                    <a href="#" class="nav-link text-gray-300 hover:text-white">Releases</a>
+                    <a href="#" class="nav-link text-gray-300 hover:text-white">Roaster</a>
+                    <a href="#" class="nav-link text-gray-300 hover:text-white">Visual Arts</a>
+                    <a href="#" class="nav-link text-gray-300 hover:text-white">Shop</a>
+                    <a href="#" class="nav-link text-gray-300 hover:text-white">Bookings</a>
+                    <a href="#" class="nav-link text-gray-300 hover:text-white">Contact</a>
+                    <a href="#" class="nav-link text-gray-300 hover:text-white">Events</a>
+                </nav>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black bg-opacity-95 border-t border-green-800">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                <a href="#" class="nav-link text-gray-300 hover:text-white py-2 border-b border-green-900">Home</a>
+                <a href="#" class="nav-link text-gray-300 hover:text-white py-2 border-b border-green-900">About</a>
+                <a href="#" class="nav-link text-gray-300 hover:text-white py-2 border-b border-green-900">Releases</a>
+                <a href="#" class="nav-link text-gray-300 hover:text-white py-2 border-b border-green-900">Roaster</a>
+                <a href="#" class="nav-link text-gray-300 hover:text-white py-2 border-b border-green-900">Visual Arts</a>
+                <a href="#" class="nav-link text-gray-300 hover:text-white py-2 border-b border-green-900">Shop</a>
+                <a href="#" class="nav-link text-gray-300 hover:text-white py-2 border-b border-green-900">Bookings</a>
+                <a href="#" class="nav-link text-gray-300 hover:text-white py-2 border-b border-green-900">Contact</a>
+                <a href="#" class="nav-link text-gray-300 hover:text-white py-2">Events</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative" style="z-index: 1;">
+        <div class="container mx-auto px-4 py-32 text-center">
+            <h2 class="text-5xl md:text-7xl title-font mb-6 tracking-wider">
+                <span class="text-white">DEEP FOREST</span>
+                <span class="gold-text">PSYTRANCE</span>
+            </h2>
+            <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-10 text-gray-300">
+                Where ancient trees whisper secrets to the rhythm of the cosmos
+            </p>
+            <div class="flex justify-center space-x-4">
+                <a href="#" class="px-8 py-3 bg-transparent border gold-border text-gold-400 hover:bg-green-900 hover:bg-opacity-30 transition duration-300">
+                    Explore Releases
+                </a>
+                <a href="#" class="px-8 py-3 bg-green-900 bg-opacity-70 hover:bg-opacity-100 text-white transition duration-300">
+                    Join the Ritual
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Latest Releases -->
+    <section class="py-16 bg-black bg-opacity-70">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl title-font mb-4 gold-text">✦ LATEST RELEASES  ✦</h3>
+                <div class="mystical-divider"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Release 1 -->
+                <div class="bg-black bg-opacity-50 border border-green-800 p-4 hover-glow transition duration-300">
+                    <div class="mb-4 overflow-hidden">
+                        <img src="https://via.placeholder.com/300x300/14331e/d4af37?text=Bosque+01" alt="Album Cover" class="w-full album-cover">
+                    </div>
+                    <h4 class="text-xl title-font mb-2 gold-text">Shaman's Dream</h4>
+                    <p class="text-gray-400 mb-3">by Forest Oracle</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">June 2023</span>
+                        <button class="text-xs gold-text border gold-border px-3 py-1 hover:bg-green-900 hover:bg-opacity-30">
+                            Listen
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Release 2 -->
+                <div class="bg-black bg-opacity-50 border border-green-800 p-4 hover-glow transition duration-300">
+                    <div class="mb-4 overflow-hidden">
+                        <img src="https://via.placeholder.com/300x300/14331e/d4af37?text=Bosque+02" alt="Album Cover" class="w-full album-cover">
+                    </div>
+                    <h4 class="text-xl title-font mb-2 gold-text">Moonlit Ritual</h4>
+                    <p class="text-gray-400 mb-3">by Sylvan Echo</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">April 2023</span>
+                        <button class="text-xs gold-text border gold-border px-3 py-1 hover:bg-green-900 hover:bg-opacity-30">
+                            Listen
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Release 3 -->
+                <div class="bg-black bg-opacity-50 border border-green-800 p-4 hover-glow transition duration-300">
+                    <div class="mb-4 overflow-hidden">
+                        <img src="https://via.placeholder.com/300x300/14331e/d4af37?text=Bosque+03" alt="Album Cover" class="w-full album-cover">
+                    </div>
+                    <h4 class="text-xl title-font mb-2 gold-text">Ancient Roots</h4>
+                    <p class="text-gray-400 mb-3">by Moss Weaver</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">February 2023</span>
+                        <button class="text-xs gold-text border gold-border px-3 py-1 hover:bg-green-900 hover:bg-opacity-30">
+                            Listen
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Release 4 -->
+                <div class="bg-black bg-opacity-50 border border-green-800 p-4 hover-glow transition duration-300">
+                    <div class="mb-4 overflow-hidden">
+                        <img src="https://via.placeholder.com/300x300/14331e/d4af37?text=Bosque+04" alt="Album Cover" class="w-full album-cover">
+                    </div>
+                    <h4 class="text-xl title-font mb-2 gold-text">Spiral Grove</h4>
+                    <p class="text-gray-400 mb-3">by Verdant Mind</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm text-gray-500">December 2022</span>
+                        <button class="text-xs gold-text border gold-border px-3 py-1 hover:bg-green-900 hover:bg-opacity-30">
+                            Listen
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="inline-block px-6 py-2 border gold-border gold-text hover:bg-green-900 hover:bg-opacity-30 transition duration-300">
+                    View All Releases
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upcoming Events -->
+    <section class="py-16 bg-gradient-to-b from-black via-green-900 to-black bg-opacity-70">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h3 class="text-3xl title-font mb-4 gold-text">✦ UPCOMING EVENTS ✦</h3>
+                <div class="mystical-divider"></div>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <!-- Event 1 -->
+                <div class="flex flex-col md:flex-row mb-8 border-b border-green-800 pb-8">
+                    <div class="md:w-1/3 mb-4 md:mb-0">
+                        <div class="border gold-border p-2 text-center">
+                            <div class="text-4xl title-font gold-text">23</div>
+                            <div class="text-lg uppercase">June</div>
+                            <div class="text-sm text-gray-400">2023</div>
+                        </div>
+                    </div>
+                    <div class="md:w-2/3">
+                        <h4 class="text-2xl title-font mb-2">Forest Gathering</h4>
+                        <p class="text-gray-400 mb-3">Blackwood Forest, Germany</p>
+                        <p class="text-gray-300 mb-4">A 3-day immersive experience deep in the ancient forest with our full roster of artists and special guests from around the world.</p>
+                        <a href="#" class="text-sm gold-text hover:underline">More Info & Tickets</a>
+                    </div>
+                </div>
+                
+                <!-- Event 2 -->
+                <div class="flex flex-col md:flex-row mb-8 border-b border-green-800 pb-8">
+                    <div class="md:w-1/3 mb-4 md:mb-0">
+                        <div class="border gold-border p-2 text-center">
+                            <div class="text-4xl title-font gold-text">14</div>
+                            <div class="text-lg uppercase">July</div>
+                            <div class="text-sm text-gray-400">2023</div>
+                        </div>
+                    </div>
+                    <div class="md:w-2/3">
+                        <h4 class="text-2xl title-font mb-2">Lunar Eclipse Ritual</h4>
+                        <p class="text-gray-400 mb-3">Mystic Valley, Portugal</p>
+                        <p class="text-gray-300 mb-4">A special full moon gathering featuring live performances and visual projections under the eclipse.</p>
+                        <a href="#" class="text-sm gold-text hover:underline">More Info & Tickets</a>
+                    </div>
+                </div>
+                
+                <!-- Event 3 -->
+                <div class="flex flex-col md:flex-row">
+                    <div class="md:w-1/3 mb-4 md:mb-0">
+                        <div class="border gold-border p-2 text-center">
+                            <div class="text-4xl title-font gold-text">8</div>
+                            <div class="text-lg uppercase">August</div>
+                            <div class="text-sm text-gray-400">2023</div>
+                        </div>
+                    </div>
+                    <div class="md:w-2/3">
+                        <h4 class="text-2xl title-font mb-2">Sacred Groove Festival</h4>
+                        <p class="text-gray-400 mb-3">Elderwood Sanctuary, UK</p>
+                        <p class="text-gray-300 mb-4">Our annual flagship festival with 5 stages, art installations, and workshops on shamanism and sound healing.</p>
+                        <a href="#" class="text-sm gold-text hover:underline">More Info & Tickets</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-16 bg-black bg-opacity-80">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-10 lg:mb-0 lg:pr-10">
+                    <img src="https://via.placeholder.com/600x400/0a0a0a/14331e?text=Bosque+Records" alt="About Bosque Records" class="w-full border border-green-800">
+                </div>
+                <div class="lg:w-1/2">
+                    <h3 class="text-3xl title-font mb-6 gold-text">✦ ABOUT BOSQUE RECORDS  ✦</h3>
+                    <p class="text-gray-300 mb-4">
+                        Born from the shadows of ancient forests and the pulsating energy of psychedelic trance, Bosque Records is a sanctuary for deep, mystical soundscapes.
+                    </p>
+                    <p class="text-gray-300 mb-4">
+                        Founded in 2018 by a collective of forest-dwelling producers and visual artists, we curate experiences that bridge the earthly and the ethereal.
+                    </p>
+                    <p class="text-gray-300 mb-6">
+                        Our releases are more than music—they're sonic rituals designed to transport listeners to primordial groves where time bends and consciousness expands.
+                    </p>
+                    <a href="#" class="inline-block px-6 py-2 border gold-border gold-text hover:bg-green-900 hover:bg-opacity-30 transition duration-300">
+                        Our Story
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-16 bg-gradient-to-r from-green-900 to-black">
+        <div class="container mx-auto px-4 text-center">
+            <h3 class="text-3xl title-font mb-6 gold-text">✦ JOIN OUR CIRCLE  ✦</h3>
+            <p class="text-gray-300 max-w-2xl mx-auto mb-8">
+                Receive updates on new releases, exclusive content, and invitations to secret forest gatherings.
+            </p>
+            <form class="max-w-md mx-auto flex">
+                <input type="email" placeholder="Your sacred email" class="flex-grow px-4 py-3 bg-black bg-opacity-50 border border-green-800 text-white focus:outline-none focus:ring-1 focus:ring-green-500">
+                <button type="submit" class="px-6 py-3 bg-green-900 hover:bg-green-800 text-white transition duration-300">
+                    Subscribe
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-green-900 py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h4 class="text-xl title-font mb-4 gold-text">BOSQUE RECORDS</h4>
+                    <p class="text-gray-400 mb-4">
+                        Deep forest psychedelic trance label and collective.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-soundcloud"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-bandcamp"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h5 class="text-lg title-font mb-4 gold-text">EXPLORE</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Releases</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Artists</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Events</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Visual Arts</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-lg title-font mb-4 gold-text">SUPPORT</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Shop</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Bookings</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contact</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-lg title-font mb-4 gold-text">LEGAL</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">Terms</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Privacy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-green-900 pt-8 text-center text-gray-500 text-sm">
+                <p>© 2023 Bosque Records. All rights reserved. Crafted with  ♥ in the heart of the forest.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ThreeJS Fractal Background
+        let scene, camera, renderer;
+        let fractal;
+        
+        function initThreeJS() {
+            // Create scene
+            scene = new THREE.Scene();
+            
+            // Create camera
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+            
+            // Create renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x0a0a0a, 1);
+            renderer.domElement.style.position = 'fixed';
+            renderer.domElement.style.top = '0';
+            renderer.domElement.style.left = '0';
+            renderer.domElement.style.zIndex = '-1';
+            document.body.appendChild(renderer.domElement);
+            
+            // Create fractal geometry
+            const geometry = new THREE.IcosahedronGeometry(1, 6);
+            
+            // Create material with dark green color
+            const material = new THREE.MeshPhongMaterial({
+                color: 0x14331e,
+                emissive: 0x0a3d20,
+                specular: 0x2a7a4a,
+                shininess: 10,
+                wireframe: false,
+                flatShading: true
+            });
+            
+            // Create fractal mesh
+            fractal = new THREE.Mesh(geometry, material);
+            scene.add(fractal);
+            
+            // Add lights
+            const ambientLight = new THREE.AmbientLight(0x14331e, 0.5);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xd4af37, 0.8);
+            directionalLight.position.set(1, 1, 1);
+            scene.add(directionalLight);
+            
+            // Add subtle fog
+            scene.fog = new THREE.FogExp2(0x0a0a0a, 0.05);
+            
+            // Handle window resize
+            window.addEventListener('resize', onWindowResize);
+            
+            // Start animation
+            animate();
+        }
+        
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Rotate fractal slowly
+            if (fractal) {
+                fractal.rotation.x += 0.001;
+                fractal.rotation.y += 0.002;
+            }
+            
+            renderer.render(scene, camera);
+        }
+        
+        // Initialize ThreeJS when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initThreeJS);
+        
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

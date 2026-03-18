@@ -1,0 +1,158 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  frontend:
+    name: Frontend Build & Test
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: customers/bosque-recordings/package-lock.json
+
+      - name: Install dependencies
+        working-directory: customers/bosque-recordings
+        run: npm ci
+
+      - name: Run ESLint
+        working-directory: customers/bosque-recordings
+        run: npm run lint
+
+      - name: Run TypeScript check
+        working-directory: customers/bosque-recordings
+        run: npm run type-check
+
+      - name: Build
+        working-directory: customers/bosque-recordings
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        with:
+          name: frontend-dist
+          path: customers/bosque-recordings/dist
+          retention-days: 7
+
+  backend:
+    name: Backend Build & Test
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 'latest'
+
+      - name: Install dependencies
+        working-directory: customers/bosque-recordings/backend
+        run: bun install
+
+      - name: Generate Prisma Client
+        working-directory: customers/bosque-recordings/backend
+        run: bun run db:generate
+
+      - name: Build
+        working-directory: customers/bosque-recordings/backend
+        run: bun run build
+
+      - name: Run tests
+        working-directory: customers/bosque-recordings/backend
+        run: bun test
+        continue-on-error: true
+
+  docker:
+    name: Docker Build
+    runs-on: ubuntu-latest
+    needs: [frontend, backend]
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push frontend
+        uses: docker/build-push-action@v5
+        with:
+          context: customers/bosque-recordings
+          file: customers/bosque-recordings/Dockerfile
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}/frontend:latest
+            ghcr.io/${{ github.repository }}/frontend:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build and push backend
+        uses: docker/build-push-action@v5
+        with:
+          context: customers/bosque-recordings/backend
+          file: customers/bosque-recordings/backend/Dockerfile
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}/backend:latest
+            ghcr.io/${{ github.repository }}/backend:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  lighthouse:
+    name: Lighthouse Audit
+    runs-on: ubuntu-latest
+    needs: [frontend]
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        working-directory: customers/bosque-recordings
+        run: npm ci
+
+      - name: Build
+        working-directory: customers/bosque-recordings
+        run: npm run build
+
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: http://localhost:3000
+          budgetPath: ./lighthouse-budget.json
+          uploadArtifacts: true
+        continue-on-error: true

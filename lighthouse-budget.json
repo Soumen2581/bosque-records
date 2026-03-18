@@ -1,0 +1,40 @@
+{
+  "ci": {
+    "collect": {
+      "url": [
+        "http://localhost:3000/"
+      ],
+      "numberOfRuns": 3
+    },
+    "assert": {
+      "categories": {
+        "performance": {
+          "score": 0.7
+        },
+        "accessibility": {
+          "score": 0.8
+        },
+        "best-practices": {
+          "score": 0.8
+        },
+        "seo": {
+          "score": 0.8
+        },
+        "pwa": {
+          "score": 0.5
+        }
+      },
+      "assertions": {
+        "first-contentful-paint": ["warn", { "maxNumericValue": 3000 }],
+        "largest-contentful-paint": ["warn", { "maxNumericValue": 5000 }],
+        "cumulative-layout-shift": ["warn", { "maxNumericValue": 0.15 }],
+        "total-blocking-time": ["warn", { "maxNumericValue": 1000 }],
+        "speed-index": ["warn", { "maxNumericValue": 5000 }],
+        "interactive": ["warn", { "maxNumericValue": 8000 }]
+      }
+    },
+    "upload": {
+      "target": "temporary-public-storage"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+# Code Owners for Bosque Records
+# These users are automatically requested for review when code is modified
+
+# Default owner for all files
+*       @TribeWarez/admin
+
+# Frontend specific
+/src/   @TribeWarez/frontend @TribeWarez/design
+*.vue   @TribeWarez/frontend @TribeWarez/design
+*.css   @TribeWarez/frontend @TribeWarez/design
+
+# Backend specific
+/backend/   @TribeWarez/backend @TribeWarez/admin
+
+# DevOps / Infrastructure
+Dockerfile*     @TribeWarez/devops
+docker-compose* @TribeWarez/devops
+.github/       @TribeWarez/devops
