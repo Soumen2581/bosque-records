@@ -74,19 +74,107 @@ model Event {
 }
 
 model Product {
-  id          String   @id @default(cuid())
-  name        String
-  slug        String   @unique
-  description String?
-  price       Float
-  images      String
-  category    String
-  inStock     Boolean  @default(true)
-  quantity    Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id           String   @id @default(cuid())
+  name         String
+  slug         String   @unique
+  description  String?
+  price        Float
+  salePrice    Float?
+  images       String   // JSON array
+  category     String   // "clothing", "vinyl", "digital", "accessories", "art", "cds"
+  productType  String   @default("physical") // "physical", "digital", "vinyl"
+  inStock      Boolean  @default(true)
+  quantity     Int      @default(0)
+  sku          String?
+  weight       Float?   // grams for shipping calc
+  dimensions   String?  // JSON {width, height, depth} in cm
+  variants     String?  // JSON {sizes: ["S","M","L"], colors: ["black"]}
+  bandcampUrl String?  // for music redirect
+  downloadMp3  String?  // URL for MP3 download (digital products)
+  downloadWav  String?  // URL for WAV download (digital products)
+  streamUrl    String?  // URL for streaming (digital products)
+  featured     Boolean  @default(false)
+  tags         String   // comma-separated
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  orderItems         OrderItem[]
+  digitalLibraryItems DigitalLibrary[]
   
   @@map("products")
+}
+
+model Customer {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String?
+  firstName    String?
+  lastName     String?
+  phone        String?
+  addresses    String?  // JSON array of saved addresses
+  isAdmin      Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  orders            Order[]
+  digitalLibraryItems DigitalLibrary[]
+  
+  @@map("customers")
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  orderNumber     String      @unique
+  customerId      String?
+  customer        Customer?    @relation(fields: [customerId], references: [id])
+  customerEmail   String
+  customerName    String?
+  status          String      @default("pending") // pending, paid, processing, shipped, delivered, cancelled, refunded
+  paymentMethod   String?     // stripe, sepa, bank_transfer
+  paymentId       String?     // external payment reference
+  subtotal        Float
+  shippingCost    Float       @default(0)
+  total           Float
+  shippingAddress String?      // JSON
+  billingAddress  String?     // JSON
+  notes           String?
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  
+  items OrderItem[]
+  
+  @@map("orders")
+}
+
+model OrderItem {
+  id          String  @id @default(cuid())
+  orderId     String
+  order       Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId   String
+  product     Product @relation(fields: [productId], references: [id])
+  productName String
+  productImage String
+  quantity    Int
+  price       Float   // price at time of purchase
+  variant     String? // size/color at purchase
+  
+  @@map("order_items")
+}
+
+model DigitalLibrary {
+  id        String   @id @default(cuid())
+  customerId String
+  customer  Customer @relation(fields: [customerId], references: [id])
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  downloadCountMp3 Int @default(0)
+  downloadCountWav Int @default(0)
+  lastDownloadAt   DateTime?
+  downloadExpiry   DateTime?  // when download links expire
+  createdAt   DateTime @default(now())
+  
+  @@unique([customerId, productId])
+  @@map("digital_library")
 }
 
 model Booking {
@@ -124,4 +212,4 @@ model Artwork {
   createdAt   DateTime @default(now())
   
   @@map("artworks")
-} 
+}

@@ -51,6 +51,36 @@ const routes: RouteRecordRaw[] = [
     meta: { title: 'Shop | Bosque Records' }
   },
   {
+    path: '/shop/:slug',
+    name: 'ProductDetail',
+    component: () => import('@/views/ProductDetailView.vue'),
+    meta: { title: 'Product | Bosque Records' }
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: () => import('@/views/CartView.vue'),
+    meta: { title: 'Cart | Bosque Records' }
+  },
+  {
+    path: '/checkout',
+    name: 'Checkout',
+    component: () => import('@/views/CheckoutView.vue'),
+    meta: { title: 'Checkout | Bosque Records' }
+  },
+  {
+    path: '/checkout/success',
+    name: 'OrderSuccess',
+    component: () => import('@/views/OrderSuccessView.vue'),
+    meta: { title: 'Order Confirmed | Bosque Records' }
+  },
+  {
+    path: '/account',
+    name: 'Account',
+    component: () => import('@/views/AccountView.vue'),
+    meta: { title: 'My Account | Bosque Records' }
+  },
+  {
     path: '/bookings',
     name: 'Bookings',
     component: () => import('@/views/BookingsView.vue'),

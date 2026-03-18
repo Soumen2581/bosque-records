@@ -13,6 +13,8 @@ import { newsletterRoute } from './routes/newsletter'
 import { artworksRoute } from './routes/artworks'
 import { adminRoute } from './routes/admin'
 import { bandcampRoute } from './routes/bandcamp'
+import { ordersRoutes } from './routes/orders'
+import { customersRoutes } from './routes/customers'
 
 // Initialize Prisma
 export const prisma = new PrismaClient()
@@ -54,6 +56,8 @@ const app = new Elysia()
       .use(artworksRoute)
       .use(adminRoute)
       .use(bandcampRoute)
+      .use(ordersRoutes)
+      .use(customersRoutes)
   )
   .listen(3001)
 

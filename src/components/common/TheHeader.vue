@@ -61,7 +61,7 @@
         </button>
         
         <!-- Desktop Navigation -->
-        <nav class="hidden md:flex space-x-8">
+        <nav class="hidden md:flex items-center space-x-8">
           <router-link 
             v-for="item in navItems"
             :key="item.path"
@@ -70,6 +70,30 @@
             active-class="text-white"
           >
             {{ item.label }}
+          </router-link>
+          
+          <!-- Cart Icon -->
+          <router-link
+            to="/cart"
+            class="relative text-gray-medium hover:text-mystical-gold transition-colors"
+            active-class="text-mystical-gold"
+          >
+            <i class="fas fa-shopping-cart text-xl"></i>
+            <span
+              v-if="cartStore.itemCount > 0"
+              class="absolute -top-2 -right-2 w-5 h-5 bg-mystical-gold text-forest-black text-xs font-bold rounded-full flex items-center justify-center"
+            >
+              {{ cartStore.itemCount > 9 ? '9+' : cartStore.itemCount }}
+            </span>
+          </router-link>
+          
+          <!-- Account Icon -->
+          <router-link
+            to="/account"
+            class="text-gray-medium hover:text-mystical-gold transition-colors"
+            active-class="text-mystical-gold"
+          >
+            <i class="fas fa-user text-xl"></i>
           </router-link>
         </nav>
       </div>
@@ -87,10 +111,12 @@
 <script setup>
 import { ref } from 'vue'
 import MobileMenu from './MobileMenu.vue'
+import { useCartStore } from '@/stores/cart'
 import bosqueHeaderLogo from '@/assets/styles/image/logos/Bosque_Header.png'
 import recordsSubHeaderLogo from '@/assets/styles/image/logos/Records_Sub_Header.png'
 import bosqueRecordsLogo from '@/assets/styles/image/logos/Bosque Records Logo.png'
 
+const cartStore = useCartStore()
 const showMobileMenu = ref(false)
 
 const navItems = [
