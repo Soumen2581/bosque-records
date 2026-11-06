@@ -18,9 +18,7 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   min-height: 100vh;
-  background:
-    radial-gradient(1200px 700px at 80% -10%, rgba(24, 58, 40, 0.55), transparent 60%),
-    var(--bg);
+  background: #070a08;
   color: var(--ink);
   font-family: var(--ui);
   font-size: 17px;
@@ -42,7 +40,26 @@ button, input, select, textarea { font: inherit; color: inherit; }
 }
 .skip:focus { top: 1rem; }
 
-.shell { min-height: 100vh; display: flex; flex-direction: column; }
+.shell { min-height: 100vh; display: flex; flex-direction: column; position: relative; z-index: 1; }
+.living-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  display: block;
+}
+.liquid-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+.atmosphere-toggle {
+  background: none;
+  border: 0;
+  color: var(--muted);
+  min-height: 44px;
+  padding: 0 0.2rem;
+  cursor: pointer;
+}
+.legal-actions { display: flex; gap: 0.8rem; align-items: center; }
 .top {
   position: sticky;
   top: 0;
@@ -53,7 +70,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
   justify-content: space-between;
   gap: 0.8rem 1rem;
   padding: 0.85rem 5vw;
-  background: rgba(8, 11, 8, 0.9);
+  background: rgba(7, 10, 8, 0.9);
   border-bottom: 1px solid var(--line);
   backdrop-filter: blur(8px);
 }
@@ -85,6 +102,7 @@ main { flex: 1; }
   padding: 3rem 5vw 2rem;
   border-top: 1px solid var(--line);
   color: var(--muted);
+  background: rgba(7, 10, 8, 0.82);
 }
 .foot a { color: var(--ink); }
 .foot h2 { font-family: var(--display); font-weight: 400; color: var(--gold); font-size: 1.2rem; margin: 0 0 0.6rem; }
@@ -207,6 +225,34 @@ main { flex: 1; }
 .error { color: #e7c3b0; }
 .ok { color: var(--moss); }
 
+.roster {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: 1.2rem;
+  margin: 1.2rem 0 2.4rem;
+}
+.roster-card { color: inherit; text-decoration: none; }
+.roster-card img, .roster-card .plate, .explorer .plate {
+  width: 100%;
+  max-width: none;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+.roster-card strong { display: block; margin-top: 0.45rem; font-family: var(--display); font-size: 1.35rem; font-weight: 400; }
+.artist-head { display: grid; grid-template-columns: minmax(12rem, 22rem) 1fr; gap: 1.4rem; align-items: end; }
+.event-list { display: grid; gap: 2.2rem; margin: 1rem 0 2.6rem; }
+.event-card { display: grid; grid-template-columns: minmax(14rem, 28rem) 1fr; gap: 1.2rem; align-items: start; }
+.event-card.no-photo { grid-template-columns: 1fr; }
+.event-photos { display: grid; gap: 0.6rem; }
+.event-photos img { width: 100%; height: auto; object-fit: contain; background: #070a08; }
+.event-card h3 { font-family: var(--display); font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 400; margin: 0 0 0.3rem; }
+.event-card ul { margin: 0.6rem 0; padding-left: 1.1rem; }
+.event-artists { display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 0.8rem 0 1rem; }
+.event-artists a { width: 7.2rem; color: inherit; text-decoration: none; }
+.event-artists img { width: 100%; aspect-ratio: 1; object-fit: cover; object-position: center; background: #070a08; }
+.event-artists span { display: block; margin-top: 0.3rem; }
+.event-card li { margin: 0.15rem 0; }
+.artist-head img { width: 100%; aspect-ratio: 1; object-fit: cover; }
 .artists { display: grid; gap: 0; }
 .artists a {
   display: flex;
@@ -233,7 +279,7 @@ main { flex: 1; }
     background: var(--bg);
     border-bottom: 1px solid var(--line);
   }
-  .hero, .feature, .release, .foot { grid-template-columns: 1fr; }
+  .hero, .feature, .release, .foot, .artist-head, .event-card { grid-template-columns: 1fr; }
   .index a { grid-template-columns: 1fr; gap: 0.15rem; }
   .hero { min-height: auto; padding-top: 3rem; }
 }
@@ -348,6 +394,15 @@ main { flex: 1; }
     padding-inline: 11vw;
   }
   .explorer article { flex-basis: 78vw; }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  html[data-atmosphere='on'] .explorer article.is-active img {
+    transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1), filter 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  html[data-atmosphere='on'] .explorer article.is-active:hover img {
+    transform: scale(1.012);
+    filter: url(#cover-liquid);
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

@@ -1,7 +1,8 @@
 import { type ChangeEvent, type FormEvent, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { label } from '@/config/label'
-import { artists } from '@/lib/catalog'
+import { formatEventDate, labelEvents } from '@/data/events'
+import { rosterArtists } from '@/lib/catalog'
 
 const empty = { name: '', email: '', organization: '', artist: '', eventName: '', date: '', venue: '', city: '', eventType: 'Performance', message: '', company: '' }
 
@@ -18,14 +19,76 @@ export function AboutPage() {
 }
 
 export function EventsPage() {
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const upcoming = labelEvents.filter((event) => new Date(`${event.end ?? event.start}T00:00:00`) >= today)
+  const past = labelEvents.filter((event) => new Date(`${event.end ?? event.start}T00:00:00`) < today)
+  const latest = past[0]
+  const earlier = past.slice(1)
   return (
     <div className="page">
       <header className="page-head">
         <h1>Events</h1>
-        <p className="lede">No upcoming events are published. Past dates stay in the archive once they are verified.</p>
+        <p className="lede">Dates and pictures taken from the label’s public Instagram posts. A biography of the night is not added beyond that post.</p>
         <Link className="btn" to="/bookings">Book the label</Link>
       </header>
+      {upcoming.length ? (
+        <section>
+          <h2>Upcoming</h2>
+          <div className="event-list">
+            {upcoming.map((event) => <EventCard key={event.id} event={event} />)}
+          </div>
+        </section>
+      ) : null}
+      {latest ? (
+        <section>
+          <h2>Latest</h2>
+          <div className="event-list">
+            <EventCard event={latest} />
+          </div>
+        </section>
+      ) : null}
+      {earlier.length ? (
+        <section>
+          <h2>Past</h2>
+          <div className="event-list">
+            {earlier.map((event) => <EventCard key={event.id} event={event} />)}
+          </div>
+        </section>
+      ) : null}
     </div>
+  )
+}
+
+function EventCard({ event }: { event: (typeof labelEvents)[number] }) {
+  return (
+    <article className={event.images.length ? 'event-card' : 'event-card no-photo'}>
+      {event.images.length ? (
+        <div className="event-photos">
+          {event.images.map((src) => <img key={src} src={src} alt="" />)}
+        </div>
+      ) : null}
+      <div>
+        <p className="kicker">{formatEventDate(event)}</p>
+        <h3>{event.title}</h3>
+        <p>{event.place}</p>
+        <p className="meta">{event.detail}</p>
+        <ul>
+          {event.lineup.map((name) => <li key={name}>{name}</li>)}
+        </ul>
+        {event.artists.length ? (
+          <div className="event-artists">
+            {event.artists.map((artist) => (
+              <Link key={artist.id} to={`/artists/${artist.id}`}>
+                <img src={artist.image} alt="" />
+                <span>{artist.name}</span>
+              </Link>
+            ))}
+          </div>
+        ) : null}
+        <p><a href={event.instagram}>Instagram post</a></p>
+      </div>
+    </article>
   )
 }
 
@@ -136,7 +199,7 @@ function InquiryPage({ title, intro, eventType }: { title: string; intro: string
         <label className="field"><span>Artist</span>
           <select value={form.artist} onChange={set('artist')}>
             <option value="">Label choice</option>
-            {artists.map((artist) => <option key={artist.id}>{artist.name}</option>)}
+            {rosterArtists.map((artist) => <option key={artist.id}>{artist.name}</option>)}
           </select>
         </label>
         <label className="field"><span>Event name</span><input value={form.eventName} onChange={set('eventName')} /></label>

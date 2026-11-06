@@ -2,12 +2,17 @@ import { Link, useParams } from 'react-router-dom'
 import { Cover } from '@/components/Cover'
 import { useListen } from '@/components/Listen'
 import { TransitionLink } from '@/components/TransitionLink'
+import { useEffect } from 'react'
+import { setTintFrom } from '@/atmosphere'
 import { formatDate, formatDuration, releaseBySlug, releases } from '@/lib/catalog'
 
 export function ReleasePage() {
   const { slug } = useParams()
   const listen = useListen()
   const release = slug ? releaseBySlug(slug) : undefined
+  useEffect(() => {
+    if (release) setTintFrom(release.slug)
+  }, [release])
   if (!release) {
     return (
       <div className="page">

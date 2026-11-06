@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { NavLink, Outlet, useLocation, useNavigationType } from 'react-router-dom'
 import { label } from '@/config/label'
+import { AtmosphereToggle, LivingBackground } from '@/components/LivingBackground'
 import { ListeningDock, ListenProvider } from '@/components/Listen'
 import mark from '@/assets/styles/image/logos/Bosque_Header.png'
 
@@ -44,6 +45,7 @@ function Frame() {
 
   return (
     <div className="shell">
+      <LivingBackground />
       <div className="scroll-progress" style={{ transform: `scaleX(${progress})` }} />
       <a className="skip" href="#content">Skip to content</a>
       <header className="top">
@@ -90,7 +92,10 @@ function Frame() {
         </div>
         <p className="legal">
           © {new Date().getFullYear()} Bosque Records
-          <button type="button" className="btn" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Back to top</button>
+          <span className="legal-actions">
+            <AtmosphereToggle />
+            <button type="button" className="btn" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Back to top</button>
+          </span>
         </p>
       </footer>
       <ListeningDock />

@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { TransitionLink } from '@/components/TransitionLink'
-import { artists, formatDate, releases } from '@/lib/catalog'
+import { formatDate, releases, rosterArtists } from '@/lib/catalog'
 
 const tabs = [
   ['releases', 'Releases'],
@@ -30,7 +30,7 @@ export function DiscoverPage() {
     return `${release.title} ${release.artist.name}`.toLowerCase().includes(query)
   }), [query, tab])
 
-  const artistList = useMemo(() => artists.filter((artist) => {
+  const artistList = useMemo(() => rosterArtists.filter((artist) => {
     if (!query) return true
     return artist.name.toLowerCase().includes(query)
   }), [query])

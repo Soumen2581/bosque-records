@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react'
 import { TransitionLink } from '@/components/TransitionLink'
 import { useListen } from '@/components/Listen'
+import { setTintFrom } from '@/atmosphere'
 import { formatDate, type ArtistSummary, type Release } from '@/lib/catalog'
 
 function useCenteredIndex(count: number) {
@@ -78,6 +79,9 @@ export function ReleaseExplorer({ items, title }: { items: Release[]; title: str
   const { scroller, index, go, onKey, onPointerDown, onPointerMove, onPointerUp, moved } = useCenteredIndex(items.length)
   const listen = useListen()
   const active = items[index]
+  useEffect(() => {
+    if (active) setTintFrom(active.slug)
+  }, [active])
   if (!active) return null
 
   return (
@@ -141,6 +145,9 @@ export function ReleaseExplorer({ items, title }: { items: Release[]; title: str
 export function ArtistExplorer({ items }: { items: ArtistSummary[] }) {
   const { scroller, index, go, onKey, onPointerDown, onPointerMove, onPointerUp, moved } = useCenteredIndex(items.length)
   const active = items[index]
+  useEffect(() => {
+    if (active) setTintFrom(active.releases[0]?.slug ?? active.id)
+  }, [active])
   if (!active) return null
   const cover = active.releases[0]
 
@@ -149,7 +156,7 @@ export function ArtistExplorer({ items }: { items: ArtistSummary[] }) {
       <header className="explorer-head">
         <div>
           <p className="kicker">Artists</p>
-          <h2>Names on the releases</h2>
+          <h2>The artists</h2>
         </div>
         <div className="explorer-controls">
           <button type="button" className="btn" onClick={() => go(Math.max(0, index - 1))} disabled={index === 0}>Previous</button>
@@ -176,15 +183,17 @@ export function ArtistExplorer({ items }: { items: ArtistSummary[] }) {
                 if (moved()) event.preventDefault()
               }}
             >
-              <img src={artist.releases[0]?.coverImage} alt="" draggable={false} />
+              {artist.image || artist.releases[0]?.coverImage
+                ? <img src={artist.image || artist.releases[0]?.coverImage} alt="" draggable={false} />
+                : <div className="plate">{artist.name}</div>}
             </TransitionLink>
           </article>
         ))}
       </div>
       <div className="focus-panel" aria-live="polite">
-        <p className="kicker">{active.releases.length} label {active.releases.length === 1 ? 'release' : 'releases'}</p>
+        <p className="kicker">{active.releases.length ? `${active.releases.length} label ${active.releases.length === 1 ? 'release' : 'releases'}` : 'Bosque Records'}</p>
         <h3>{active.name}</h3>
-        <p className="meta">Shown with artwork from {cover?.title}. A published biography is not on file.</p>
+        <p className="meta">{cover && !active.image ? `Shown with artwork from ${cover.title}. ` : ''}A published biography is not on file.</p>
         <TransitionLink className="btn" to={`/artists/${active.id}`}>Open artist</TransitionLink>
       </div>
     </section>

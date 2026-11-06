@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { label } from '@/config/label'
 import { ArtistExplorer, ReleaseExplorer } from '@/components/Explorers'
 import { transitionTo, TransitionLink } from '@/components/TransitionLink'
-import { artists, formatDate, releases } from '@/lib/catalog'
+import { formatDate, releases, rosterArtists } from '@/lib/catalog'
 import logo from '@/assets/styles/image/logos/Bosque Records Logo.png'
 
 const chronological = [...releases].sort((a, b) => a.releaseDate.localeCompare(b.releaseDate))
@@ -30,7 +30,7 @@ export function HomePage() {
         <a className="scroll-cue" href="#discography">Scroll</a>
       </section>
       <ReleaseExplorer items={releases} title="Explore the frequencies" />
-      <ArtistExplorer items={artists} />
+      <ArtistExplorer items={rosterArtists} />
       <section className="section">
         <h2>Release timeline</h2>
         <ol className="index">

@@ -49,7 +49,7 @@ export function ReleasesPage() {
         </select>
         <select aria-label="Artist" value={artist} onChange={(event) => set('artist', event.target.value)}>
           <option value="">All artists</option>
-          {artists.map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
+          {artists.filter((item) => item.releases.length).map((item) => <option key={item.id} value={item.id}>{item.name}</option>)}
         </select>
         <select aria-label="Sort" value={sort} onChange={(event) => set('sort', event.target.value)}>
           <option value="newest">Newest</option>
