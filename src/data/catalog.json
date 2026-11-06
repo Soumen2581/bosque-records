@@ -1,0 +1,666 @@
+[
+  {
+    "id": "1059581345",
+    "title": "The Future Is Now EP",
+    "slug": "the-future-is-now",
+    "releaseDate": "2026-07-21",
+    "releaseType": "EP",
+    "featured": true,
+    "artist": {
+      "id": "dinosaur-spaceship",
+      "name": "Dinosaur Spaceship"
+    },
+    "bandcampUrl": "https://bosquerecords.bandcamp.com/album/the-future-is-now-ep",
+    "embedUrl": "https://bandcamp.com/EmbeddedPlayer/album=1059581345/size=large/bgcol=080B08/linkcol=B9A36C/tracklist=false/artwork=small/transparent=true/",
+    "coverImage": "https://f4.bcbits.com/img/a3261638069_16.jpg",
+    "tracks": [
+      {
+        "id": "2980161941",
+        "title": "Night Entity (Feat. Rakasa)",
+        "duration": 486,
+        "position": 1
+      },
+      {
+        "id": "517054805",
+        "title": "The Future Is Now",
+        "duration": 463,
+        "position": 2
+      },
+      {
+        "id": "1032713310",
+        "title": "Inorganic Intelligence (Feat. Insignia)",
+        "duration": 493,
+        "position": 3
+      },
+      {
+        "id": "2989536248",
+        "title": "Adrenochrome",
+        "duration": 478,
+        "position": 4
+      }
+    ],
+    "tags": [
+      "Bosque Records"
+    ]
+  },
+  {
+    "id": "1103401005",
+    "title": "Over The Years LP",
+    "slug": "over-the-years",
+    "releaseDate": "2026-05-04",
+    "releaseType": "LP",
+    "featured": false,
+    "artist": {
+      "id": "tetzo",
+      "name": "Tetzo"
+    },
+    "bandcampUrl": "https://bosquerecords.bandcamp.com/album/over-the-years-lp-2",
+    "embedUrl": "https://bandcamp.com/EmbeddedPlayer/album=1103401005/size=large/bgcol=080B08/linkcol=B9A36C/tracklist=false/artwork=small/transparent=true/",
+    "coverImage": "https://f4.bcbits.com/img/a270466646_16.jpg",
+    "tracks": [
+      {
+        "id": "2427621829",
+        "title": "Trick The Devil",
+        "duration": 617,
+        "position": 1
+      },
+      {
+        "id": "2863982032",
+        "title": "Over The Years (Feat. Calua)",
+        "duration": 710,
+        "position": 2
+      },
+      {
+        "id": "2175644443",
+        "title": "The Chosen One",
+        "duration": 620,
+        "position": 3
+      },
+      {
+        "id": "3048508392",
+        "title": "It Came Creeping Towards Me",
+        "duration": 636,
+        "position": 4
+      },
+      {
+        "id": "3735100050",
+        "title": "Brain Education (Feat. Nuit)",
+        "duration": 661,
+        "position": 5
+      },
+      {
+        "id": "3496364765",
+        "title": "Ari Ara",
+        "duration": 691,
+        "position": 6
+      },
+      {
+        "id": "3793070406",
+        "title": "Fudoshin",
+        "duration": 594,
+        "position": 7
+      },
+      {
+        "id": "3710488671",
+        "title": "Canceling The Fate",
+        "duration": 249,
+        "position": 8
+      }
+    ],
+    "tags": [
+      "Bosque Records"
+    ]
+  },
+  {
+    "id": "1994326000",
+    "title": "Ąņamñešis Šmṛtĩ EP",
+    "slug": "anamnesis-smrti",
+    "releaseDate": "2026-03-30",
+    "releaseType": "EP",
+    "featured": false,
+    "artist": {
+      "id": "cariy",
+      "name": "Ācariyã"
+    },
+    "bandcampUrl": "https://bosquerecords.bandcamp.com/album/am-e-is-m-t-ep",
+    "embedUrl": "https://bandcamp.com/EmbeddedPlayer/album=1994326000/size=large/bgcol=080B08/linkcol=B9A36C/tracklist=false/artwork=small/transparent=true/",
+    "coverImage": "https://f4.bcbits.com/img/a2329218441_16.jpg",
+    "tracks": [
+      {
+        "id": "4233874842",
+        "title": "Tēmręt Sirra",
+        "duration": 401,
+        "position": 1
+      },
+      {
+        "id": "953227406",
+        "title": "Ŷaņtřa Ałġiz",
+        "duration": 413,
+        "position": 2
+      },
+      {
+        "id": "2782074870",
+        "title": "Vaįrāgŷa Důkķhä",
+        "duration": 436,
+        "position": 3
+      },
+      {
+        "id": "3003327721",
+        "title": "Nėheħ Ořrōsțå",
+        "duration": 483,
+        "position": 4
+      }
+    ],
+    "tags": [
+      "Bosque Records"
+    ]
+  },
+  {
+    "id": "2809108793",
+    "title": "Alquimia Bosque VA",
+    "slug": "alquimia-bosque",
+    "releaseDate": "2025-12-24",
+    "releaseType": "Compilation",
+    "featured": false,
+    "artist": {
+      "id": "foe-xan",
+      "name": "Foe'Xan"
+    },
+    "bandcampUrl": "https://bosquerecords.bandcamp.com/album/alquimia-bosque-va",
+    "embedUrl": "https://bandcamp.com/EmbeddedPlayer/album=2809108793/size=large/bgcol=080B08/linkcol=B9A36C/tracklist=false/artwork=small/transparent=true/",
+    "coverImage": "https://f4.bcbits.com/img/a48329980_16.jpg",
+    "tracks": [
+      {
+        "id": "816635386",
+        "title": "Innoxia - Bosque Miralynthra",
+        "duration": 579,
+        "position": 1
+      },
+      {
+        "id": "1096426315",
+        "title": "Upavas - Fluoridlutscherl",
+        "duration": 391,
+        "position": 2
+      },
+      {
+        "id": "2729135898",
+        "title": "Krel Vs Skanoh - Unorthodox",
+        "duration": 393,
+        "position": 3
+      },
+      {
+        "id": "1433967595",
+        "title": "Witch Freak - Why Knot ?",
+        "duration": 504,
+        "position": 4
+      },
+      {
+        "id": "1334658889",
+        "title": "Anarkick - El Matador",
+        "duration": 473,
+        "position": 5
+      },
+      {
+        "id": "2445318828",
+        "title": "N3xu5 - Alquimia Bosque",
+        "duration": 463,
+        "position": 6
+      },
+      {
+        "id": "2454861697",
+        "title": "InPsydNoize - Hive Mind",
+        "duration": 517,
+        "position": 7
+      },
+      {
+        "id": "3208147806",
+        "title": "Alien Tunes - Garimpo Illegal",
+        "duration": 434,
+        "position": 8
+      },
+      {
+        "id": "3397331509",
+        "title": "Svaaha - Nirvikalpa",
+        "duration": 536,
+        "position": 9
+      },
+      {
+        "id": "88189492",
+        "title": "Swamp Funker - Sludge Sequence",
+        "duration": 554,
+        "position": 10
+      },
+      {
+        "id": "402928863",
+        "title": "Dark Mangrove - Distorted Bass",
+        "duration": 478,
+        "position": 11
+      },
+      {
+        "id": "4105021781",
+        "title": "Dark Crystal - We're Extraterrestrials",
+        "duration": 556,
+        "position": 12
+      },
+      {
+        "id": "2235081041",
+        "title": "Garnet - Affection",
+        "duration": 376,
+        "position": 13
+      },
+      {
+        "id": "3952256935",
+        "title": "Elements - Glimpse Of Eternity",
+        "duration": 459,
+        "position": 14
+      },
+      {
+        "id": "901166741",
+        "title": "Delah - Significant Question",
+        "duration": 431,
+        "position": 15
+      },
+      {
+        "id": "3225106038",
+        "title": "Ikenaga - Emergency Radio",
+        "duration": 468,
+        "position": 16
+      },
+      {
+        "id": "1559646061",
+        "title": "Nuit - Insônia",
+        "duration": 533,
+        "position": 17
+      },
+      {
+        "id": "1054275262",
+        "title": "Jaro - Glassenscion",
+        "duration": 494,
+        "position": 18
+      },
+      {
+        "id": "1975947410",
+        "title": "Xhanok - Akashic Resonance",
+        "duration": 479,
+        "position": 19
+      },
+      {
+        "id": "3238085224",
+        "title": "Tersius - Cosmic Rearrangement",
+        "duration": 587,
+        "position": 20
+      },
+      {
+        "id": "3786372043",
+        "title": "Pnakotic Phantasm - Proto Language",
+        "duration": 571,
+        "position": 21
+      },
+      {
+        "id": "2402551480",
+        "title": "Dinosaur Spaceship Vs Golomp -Tras Dos Montes",
+        "duration": 492,
+        "position": 22
+      },
+      {
+        "id": "3997357048",
+        "title": "Faeyan - Verdalchemy",
+        "duration": 659,
+        "position": 23
+      },
+      {
+        "id": "1349373096",
+        "title": "Darkside Of FMs - Psychedelic Algorhythms",
+        "duration": 462,
+        "position": 24
+      },
+      {
+        "id": "465937371",
+        "title": "Essassani - Yaathelha",
+        "duration": 468,
+        "position": 25
+      },
+      {
+        "id": "2335880817",
+        "title": "Mentalis Zavar - DMT Experience",
+        "duration": 483,
+        "position": 26
+      },
+      {
+        "id": "3164769023",
+        "title": "Tetzo Vs Foe'Xan - Synthsiti Seremoni",
+        "duration": 736,
+        "position": 27
+      },
+      {
+        "id": "3333806195",
+        "title": "Distreekon - Constellations Of Forgotten Memories",
+        "duration": 536,
+        "position": 28
+      },
+      {
+        "id": "2705117413",
+        "title": "T.A.Z - Tweaking Reality",
+        "duration": 579,
+        "position": 29
+      },
+      {
+        "id": "2011307861",
+        "title": "AchilleSehne - ModulaRitual",
+        "duration": 469,
+        "position": 30
+      },
+      {
+        "id": "102301240",
+        "title": "Tetzo - Spectra Whisper",
+        "duration": 763,
+        "position": 31
+      },
+      {
+        "id": "232426582",
+        "title": "YantraX - Caveman",
+        "duration": 461,
+        "position": 32
+      },
+      {
+        "id": "2314032937",
+        "title": "Calua - Pure Imagination",
+        "duration": 517,
+        "position": 33
+      },
+      {
+        "id": "3904360404",
+        "title": "Aodioiboa - Luv Da Sun",
+        "duration": 496,
+        "position": 34
+      },
+      {
+        "id": "1506840582",
+        "title": "Kluster - Thermal Expansion",
+        "duration": 565,
+        "position": 35
+      }
+    ],
+    "tags": [
+      "Bosque Records"
+    ]
+  },
+  {
+    "id": "3382959208",
+    "title": "Wild Wild Wisdom EP",
+    "slug": "wild-wild-wisdom",
+    "releaseDate": "2025-09-13",
+    "releaseType": "EP",
+    "featured": false,
+    "artist": {
+      "id": "inpsydnoize",
+      "name": "InPsydNoize"
+    },
+    "bandcampUrl": "https://bosquerecords.bandcamp.com/album/wild-wild-wisdom-ep",
+    "embedUrl": "https://bandcamp.com/EmbeddedPlayer/album=3382959208/size=large/bgcol=080B08/linkcol=B9A36C/tracklist=false/artwork=small/transparent=true/",
+    "coverImage": "https://f4.bcbits.com/img/a4089663399_16.jpg",
+    "tracks": [
+      {
+        "id": "3172096533",
+        "title": "Raw Testaments",
+        "duration": 501,
+        "position": 1
+      },
+      {
+        "id": "457398483",
+        "title": "Undomesticated",
+        "duration": 537,
+        "position": 2
+      },
+      {
+        "id": "2413145875",
+        "title": "Flowing Roots",
+        "duration": 454,
+        "position": 3
+      }
+    ],
+    "tags": [
+      "Bosque Records"
+    ]
+  },
+  {
+    "id": "504381468",
+    "title": "Natural Theology EP",
+    "slug": "natural-theology",
+    "releaseDate": "2025-08-11",
+    "releaseType": "EP",
+    "featured": false,
+    "artist": {
+      "id": "pnakotic-phantasm",
+      "name": "Pnakotic Phantasm"
+    },
+    "bandcampUrl": "https://bosquerecords.bandcamp.com/album/natural-theology-ep",
+    "embedUrl": "https://bandcamp.com/EmbeddedPlayer/album=504381468/size=large/bgcol=080B08/linkcol=B9A36C/tracklist=false/artwork=small/transparent=true/",
+    "coverImage": "https://f4.bcbits.com/img/a2441785942_16.jpg",
+    "tracks": [
+      {
+        "id": "3819484315",
+        "title": "Chaos Theory",
+        "duration": 561,
+        "position": 1
+      },
+      {
+        "id": "1268073462",
+        "title": "John Lennon Is Dead",
+        "duration": 491,
+        "position": 2
+      },
+      {
+        "id": "71149842",
+        "title": "Korrigans",
+        "duration": 597,
+        "position": 3
+      },
+      {
+        "id": "2960835821",
+        "title": "Natural Theology",
+        "duration": 600,
+        "position": 4
+      }
+    ],
+    "tags": [
+      "Bosque Records"
+    ]
+  },
+  {
+    "id": "3746755840",
+    "title": "Nierika EP",
+    "slug": "nierika",
+    "releaseDate": "2025-02-26",
+    "releaseType": "EP",
+    "featured": false,
+    "artist": {
+      "id": "xhanok",
+      "name": "Xhanok"
+    },
+    "bandcampUrl": "https://bosquerecords.bandcamp.com/album/nierika-ep",
+    "embedUrl": "https://bandcamp.com/EmbeddedPlayer/album=3746755840/size=large/bgcol=080B08/linkcol=B9A36C/tracklist=false/artwork=small/transparent=true/",
+    "coverImage": "https://f4.bcbits.com/img/a970798922_16.jpg",
+    "tracks": [
+      {
+        "id": "1738503061",
+        "title": "Xhanok- Nierika",
+        "duration": 486,
+        "position": 1
+      },
+      {
+        "id": "174290906",
+        "title": "Xhanok- Huichol",
+        "duration": 403,
+        "position": 2
+      },
+      {
+        "id": "2532639199",
+        "title": "Xhanok- Caxcan",
+        "duration": 477,
+        "position": 3
+      }
+    ],
+    "tags": [
+      "Bosque Records"
+    ]
+  },
+  {
+    "id": "1076490910",
+    "title": "Roots Of The Primal Mind EP",
+    "slug": "roots-of-the-primal-mind",
+    "releaseDate": "2024-12-24",
+    "releaseType": "EP",
+    "featured": false,
+    "artist": {
+      "id": "zyamaliman",
+      "name": "Zyamaliman"
+    },
+    "bandcampUrl": "https://bosquerecords.bandcamp.com/album/roots-of-the-primal-mind-ep",
+    "embedUrl": "https://bandcamp.com/EmbeddedPlayer/album=1076490910/size=large/bgcol=080B08/linkcol=B9A36C/tracklist=false/artwork=small/transparent=true/",
+    "coverImage": "https://f4.bcbits.com/img/a1322201373_16.jpg",
+    "tracks": [
+      {
+        "id": "3965472341",
+        "title": "Kabbalah",
+        "duration": 506,
+        "position": 1
+      },
+      {
+        "id": "2816671268",
+        "title": "Werewolfing",
+        "duration": 428,
+        "position": 2
+      },
+      {
+        "id": "3617633490",
+        "title": "Angry Murloc",
+        "duration": 440,
+        "position": 3
+      }
+    ],
+    "tags": [
+      "Bosque Records"
+    ]
+  },
+  {
+    "id": "3454335116",
+    "title": "Rooted Energies EP",
+    "slug": "rooted-energies",
+    "releaseDate": "2025-05-16",
+    "releaseType": "EP",
+    "featured": false,
+    "artist": {
+      "id": "cosmik-frequency",
+      "name": "Cosmik Frequency"
+    },
+    "bandcampUrl": "https://bosquerecords.bandcamp.com/album/rooted-energies-ep",
+    "embedUrl": "https://bandcamp.com/EmbeddedPlayer/album=3454335116/size=large/bgcol=080B08/linkcol=B9A36C/tracklist=false/artwork=small/transparent=true/",
+    "coverImage": "https://f4.bcbits.com/img/a3546206161_16.jpg",
+    "tracks": [
+      {
+        "id": "2955322377",
+        "title": "Metallic Dreams",
+        "duration": 383,
+        "position": 1
+      },
+      {
+        "id": "1196591262",
+        "title": "Barstow Acid",
+        "duration": 399,
+        "position": 2
+      },
+      {
+        "id": "3935732449",
+        "title": "Buckle Your Brain",
+        "duration": 476,
+        "position": 3
+      }
+    ],
+    "tags": [
+      "Bosque Records"
+    ]
+  },
+  {
+    "id": "930853369",
+    "title": "Brains & Physics EP",
+    "slug": "brains-and-physics",
+    "releaseDate": "2024-10-14",
+    "releaseType": "EP",
+    "featured": false,
+    "artist": {
+      "id": "psychic-reptiles",
+      "name": "Psychic Reptiles"
+    },
+    "bandcampUrl": "https://bosquerecords.bandcamp.com/album/brains-physics-ep",
+    "embedUrl": "https://bandcamp.com/EmbeddedPlayer/album=930853369/size=large/bgcol=080B08/linkcol=B9A36C/tracklist=false/artwork=small/transparent=true/",
+    "coverImage": "https://f4.bcbits.com/img/a2698993862_16.jpg",
+    "tracks": [
+      {
+        "id": "1279905341",
+        "title": "Brains & Physics",
+        "duration": 403,
+        "position": 1
+      },
+      {
+        "id": "1372571742",
+        "title": "Monocrystals",
+        "duration": 398,
+        "position": 2
+      },
+      {
+        "id": "3239670648",
+        "title": "Ideal State Of Mind",
+        "duration": 407,
+        "position": 3
+      }
+    ],
+    "tags": [
+      "Bosque Records"
+    ]
+  },
+  {
+    "id": "2935211045",
+    "title": "Digital Samadhi EP",
+    "slug": "digital-samadhi",
+    "releaseDate": "2024-06-14",
+    "releaseType": "EP",
+    "featured": false,
+    "artist": {
+      "id": "quantum-psync",
+      "name": "Quantum Psync"
+    },
+    "bandcampUrl": "https://bosquerecords.bandcamp.com/album/digital-samadhi-ep",
+    "embedUrl": "https://bandcamp.com/EmbeddedPlayer/album=2935211045/size=large/bgcol=080B08/linkcol=B9A36C/tracklist=false/artwork=small/transparent=true/",
+    "coverImage": "https://f4.bcbits.com/img/a802376728_16.jpg",
+    "tracks": [
+      {
+        "id": "2112267078",
+        "title": "Saha Theertham Gaccha",
+        "duration": 507,
+        "position": 1
+      },
+      {
+        "id": "2389143974",
+        "title": "State Of Delirium",
+        "duration": 451,
+        "position": 2
+      },
+      {
+        "id": "1161133175",
+        "title": "Ghandarva's Potion",
+        "duration": 426,
+        "position": 3
+      },
+      {
+        "id": "123418877",
+        "title": "1000 Petalled Lotus",
+        "duration": 455,
+        "position": 4
+      }
+    ],
+    "tags": [
+      "Bosque Records"
+    ]
+  }
+]

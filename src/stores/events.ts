@@ -4,39 +4,7 @@ import type { Ref, ComputedRef } from 'vue'
 import { useApi } from '@/composables/useApi'
 import type { Event } from '@/types'
 
-// Mock events data for development when API is unavailable
-const mockEvents: Event[] = [
-  {
-    id: '1',
-    title: 'Forest Gathering 2024',
-    slug: 'forest-gathering-2024',
-    description: 'An immersive outdoor psytrance experience in the heart of ancient woods',
-    date: '2024-06-15T20:00:00Z',
-    venue: 'Sacred Grove',
-    location: 'Black Forest, Germany',
-    artists: [
-      { id: '1', name: 'Ghost Noize' },
-      { id: '2', name: 'Foe Xan' }
-    ],
-    ticketUrl: '#',
-    price: 35,
-    featured: true
-  },
-  {
-    id: '2',
-    title: 'Moonlit Ceremony',
-    slug: 'moonlit-ceremony',
-    description: 'A mystical night of shamanic sounds under the full moon',
-    date: '2024-07-20T22:00:00Z',
-    venue: 'The Stone Circle',
-    location: 'Cornwall, UK',
-    artists: [
-      { id: '3', name: 'Cosmik Frequency' },
-      { id: '4', name: 'Brainwavez' }
-    ],
-    featured: false
-  }
-]
+const mockEvents: Event[] = []
 
 export const useEventsStore = defineStore('events', () => {
   const events: Ref<Event[]> = ref([])

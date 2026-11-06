@@ -71,7 +71,7 @@ onMounted(() => {
 
 <style scoped>
 #app {
-  background: #0a0a0a;
+  background: #080b08;
 }
 .text-mystical-gold {
   color: #d4af37;
@@ -93,9 +93,8 @@ onMounted(() => {
 }
 
 .page-enter-from {
-  opacity: 0;
-  transform: translateY(20px) scale(0.98);
-  filter: blur(4px);
+  opacity: 1;
+  transform: translateY(12px);
 }
 
 .page-enter-to {

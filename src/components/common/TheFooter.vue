@@ -14,34 +14,16 @@
           <p class="text-gray-medium mb-4">
             Deep forest psychedelic trance label and collective.
           </p>
-          <div class="flex space-x-4">
-            <a 
-              href="#" 
-              class="text-gray-medium hover:text-white transition-colors duration-300"
-              aria-label="SoundCloud"
+          <div class="flex flex-wrap gap-x-4 gap-y-2">
+            <a
+              v-for="link in socialLinks"
+              :key="link.label"
+              :href="link.href"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-gray-medium hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mystical-gold"
             >
-              <i class="fab fa-soundcloud text-xl"></i>
-            </a>
-            <a 
-              href="#" 
-              class="text-gray-medium hover:text-white transition-colors duration-300"
-              aria-label="Bandcamp"
-            >
-              <i class="fab fa-bandcamp text-xl"></i>
-            </a>
-            <a 
-              href="#" 
-              class="text-gray-medium hover:text-white transition-colors duration-300"
-              aria-label="Instagram"
-            >
-              <i class="fab fa-instagram text-xl"></i>
-            </a>
-            <a 
-              href="#" 
-              class="text-gray-medium hover:text-white transition-colors duration-300"
-              aria-label="Facebook"
-            >
-              <i class="fab fa-facebook text-xl"></i>
+              {{ link.label }}
             </a>
           </div>
         </div>
@@ -76,17 +58,14 @@
           </ul>
         </div>
         
-        <!-- Legal Section -->
         <div>
-          <h5 class="text-lg title-font mb-4 text-mystical-gold">LEGAL</h5>
+          <h5 class="text-lg title-font mb-4 text-mystical-gold">LABEL</h5>
           <ul class="space-y-2">
-            <li v-for="link in legalLinks" :key="link.path">
-              <a 
-                :href="link.path" 
-                class="text-gray-medium hover:text-white transition-colors duration-300"
-              >
-                {{ link.label }}
-              </a>
+            <li>
+              <a :href="`mailto:${label.email}`" class="text-gray-medium hover:text-white">{{ label.email }}</a>
+            </li>
+            <li>
+              <a :href="label.links.linktree" target="_blank" rel="noopener noreferrer" class="text-gray-medium hover:text-white">Linktree</a>
             </li>
           </ul>
         </div>
@@ -103,6 +82,7 @@
 <script setup>
 import { computed } from 'vue'
 import bosqueHeaderLogo from '@/assets/styles/image/logos/Bosque_Header.png'
+import { label } from '@/config/label'
 
 const currentYear = computed(() => new Date().getFullYear())
 
@@ -117,12 +97,13 @@ const supportLinks = [
   { path: '/shop', label: 'Shop' },
   { path: '/bookings', label: 'Bookings' },
   { path: '/contact', label: 'Contact' },
-  { path: '/about', label: 'FAQ' }
+  { path: '/about', label: 'About' }
 ]
 
-const legalLinks = [
-  { path: '#', label: 'Terms' },
-  { path: '#', label: 'Privacy' },
-  { path: '#', label: 'Cookies' }
+const socialLinks = [
+  { label: 'Bandcamp', href: label.links.bandcamp },
+  { label: 'SoundCloud', href: label.links.soundcloud },
+  { label: 'Instagram', href: label.links.instagram },
+  { label: 'Facebook', href: label.links.facebook }
 ]
 </script> 

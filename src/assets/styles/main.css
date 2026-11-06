@@ -2,10 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=IM+Fell+English:ital@0;1&display=swap');
-
 /* Organic easing curves - nature-inspired */
 :root {
+  --bg: #080b08;
+  --bg-deep: #0d120d;
+  --surface: #121a14;
+  --forest: #183a28;
+  --moss: #75845c;
+  --gold: #b9a36c;
+  --ink: #e9e6d9;
+  --muted: #a4a69b;
+  --line: rgba(185, 163, 108, 0.18);
+  --font-display: "IM Fell English", serif;
+  --font-ui: "Figtree", "Avenir Next", "Segoe UI", sans-serif;
   --ease-organic: cubic-bezier(0.34, 1.56, 0.64, 1);
   --ease-forest: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --ease-growth: cubic-bezier(0.16, 1, 0.3, 1);
@@ -23,8 +32,9 @@
   }
   
   body {
-    font-family: 'IM Fell English', serif;
-    color: #e5e5e5;
+    font-family: var(--font-ui);
+    background: var(--bg);
+    color: var(--ink);
     margin: 0;
     overflow-x: hidden;
     /* Organic smooth scrolling */

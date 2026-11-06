@@ -43,30 +43,24 @@
         v-else-if="!releasesStore.loading && releasesStore.allReleases.length === 0"
         class="py-16 text-center"
       >
-        <div class="text-6xl text-mystical-gold mb-4">🌿</div>
-        <h3 class="text-2xl title-font mb-4 text-mystical-gold">No Releases Found</h3>
-        <p class="text-gray-medium">
-          The forest spirits are still preparing new sounds...
-        </p>
+        <h3 class="text-2xl title-font mb-4 text-mystical-gold">No releases published</h3>
+        <p class="text-gray-medium">The catalog will appear here when releases are available.</p>
       </section>
       
       <!-- Latest Releases -->
-      <section ref="releasesSection" class="opacity-0">
+      <section ref="releasesSection">
         <LatestReleases @play="handlePlay" />
       </section>
       
-      <!-- Upcoming Events -->
-      <section ref="eventsSection" class="opacity-0">
+      <section ref="eventsSection">
         <UpcomingEvents />
       </section>
       
-      <!-- Newsletter Signup -->
-      <section ref="newsletterSection" class="opacity-0">
+      <section ref="newsletterSection">
         <NewsletterSignup />
       </section>
       
-      <!-- About Preview -->
-      <section ref="aboutSection" class="opacity-0">
+      <section ref="aboutSection">
         <AboutPreview />
       </section>
     </template>

@@ -20,17 +20,17 @@ RUN bun install --frozen-lockfile || bun install
 # Copy prisma schema first (for generation)
 COPY prisma ./prisma/
 
+ENV DATABASE_URL=file:./dev.db
+
 # Generate Prisma client
 RUN bunx prisma generate
 
 # Copy rest of source code
 COPY . .
 
-# Create uploads directory and initialize database
 RUN mkdir -p uploads
-
-# Initialize the database
-RUN bunx prisma db push
+COPY docker-entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 # Expose port 3001
 EXPOSE 3001
@@ -40,4 +40,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=15s --retries=3 \
     CMD wget -q -O /dev/null http://localhost:3001/ || exit 1
 
 # Start the server
-CMD ["bun", "run", "start"]
+CMD ["/entrypoint.sh"]

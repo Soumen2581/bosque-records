@@ -35,7 +35,16 @@
               </div>
             </div>
             
-            <!-- Bandcamp Link -->
+            <div v-if="release.embedUrl" class="bandcamp-embed">
+              <iframe
+                :src="release.embedUrl"
+                :title="`${release.title} on Bandcamp`"
+                loading="lazy"
+                width="100%"
+                height="120"
+                style="border: 0;"
+              />
+            </div>
             <div v-if="release.bandcampUrl" class="text-center">
               <a 
                 :href="release.bandcampUrl" 

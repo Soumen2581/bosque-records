@@ -177,8 +177,11 @@ const animate = () => {
   
   time += 0.01
   drawFractal(ctx, canvas.width, canvas.height, time)
-  
-  animationFrame = requestAnimationFrame(animate)
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  if (!reduceMotion && !document.hidden) {
+    animationFrame = requestAnimationFrame(animate)
+  }
 }
 
 onMounted(() => {

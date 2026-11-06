@@ -13,17 +13,9 @@
           </div>
         </div>
         <div class="lg:w-1/2 fade-in-delay-1">
-          <h3 class="text-3xl title-font mb-6 text-mystical-gold organic-pulse">✦ ABOUT BOSQUE RECORDS ✦</h3>
-          <p class="text-gray-light mb-4 slide-up" style="animation-delay: 0.2s;">
-            Born from the shadows of ancient forests and the pulsating energy of psychedelic trance, 
-            Bosque Records is a sanctuary for deep, mystical soundscapes.
-          </p>
-          <p class="text-gray-light mb-4 slide-up" style="animation-delay: 0.3s;">
-            Bosque Records is a sanctuary of resonant energies unfolding psychedelia. Born in South India, now blooming in the United States. 
-          </p>
-          <p class="text-gray-light mb-6 slide-up" style="animation-delay: 0.4s;">
-            Our releases are more than music—they're sonic rituals designed to transport listeners 
-            to primordial groves where time bends and consciousness expands.
+          <h3 class="text-3xl title-font mb-6">About the label</h3>
+          <p class="text-gray-light mb-6">
+            Bosque Records is a sanctuary of resonant frequencies unfolding psychedelia. Conjured by Foe'Xan in South India and now blooming in the United States.
           </p>
           <router-link 
             to="/about"

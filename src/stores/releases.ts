@@ -2,112 +2,20 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import type { Ref, ComputedRef } from 'vue'
 import { useApi } from '@/composables/useApi'
-import { useRoasterImages } from '@/composables/useRoasterImages'
 import type { Release } from '@/types'
+import catalogData from '@/data/catalog.json'
 
-// Get roaster images
-const { getArtistImage } = useRoasterImages()
+const verifiedReleases: Release[] = (catalogData as Release[]).map((release) => ({
+  ...release,
+  tracks: release.tracks.map((track) => ({
+    ...track,
+    preview: release.bandcampUrl
+  }))
+}))
 
-// Mock data for development when API is unavailable
-const mockReleases: Release[] = [
-  {
-    id: '1',
-    title: 'Shaman\'s Dream',
-    slug: 'shamans-dream',
-    description: 'A mystical journey through ancient forest paths',
-    releaseDate: '2023-06-15',
-    coverImage: getArtistImage('ghost-noize') || '',
-    featured: true,
-    price: 12.99,
-    artist: { id: '1', name: 'Ghost Noize' },
-    tracks: [
-      { id: '1', title: 'Awakening', duration: 480, preview: '#' },
-      { id: '2', title: 'Vision Quest', duration: 360, preview: '#' }
-    ],
-    tags: ['psytrance', 'forest', 'shamanic']
-  },
-  {
-    id: '2',
-    title: 'Moonlit Ritual',
-    slug: 'moonlit-ritual',
-    description: 'Ceremonial sounds under the sacred moon',
-    releaseDate: '2023-04-22',
-    coverImage: getArtistImage('foe-xan') || '',
-    featured: true,
-    price: 10.99,
-    artist: { id: '2', name: 'Foe Xan' },
-    tracks: [
-      { id: '3', title: 'Lunar Dance', duration: 420, preview: '#' }
-    ],
-    tags: ['psytrance', 'lunar', 'ritual']
-  },
-  {
-    id: '3',
-    title: 'Ancient Roots',
-    slug: 'ancient-roots',
-    description: 'Deep bass frequencies from the earth\'s core',
-    releaseDate: '2023-02-10',
-    coverImage: getArtistImage('cosmik-frequency') || '',
-    featured: true,
-    price: 15.99,
-    artist: { id: '3', name: 'Cosmik Frequency' },
-    tracks: [
-      { id: '4', title: 'Earth Pulse', duration: 540, preview: '#' },
-      { id: '5', title: 'Root Network', duration: 390, preview: '#' },
-      { id: '6', title: 'Fungal Wisdom', duration: 450, preview: '#' }
-    ],
-    tags: ['psytrance', 'forest', 'earth', 'bass']
-  },
-  {
-    id: '4',
-    title: 'Spiral Grove',
-    slug: 'spiral-grove',
-    description: 'Spiraling melodies through twisted branches',
-    releaseDate: '2022-12-05',
-    coverImage: getArtistImage('brainwavez') || '',
-    featured: true,
-    price: 11.99,
-    artist: { id: '4', name: 'Brainwavez' },
-    tracks: [
-      { id: '7', title: 'Twisted Path', duration: 480, preview: '#' }
-    ],
-    tags: ['psytrance', 'progressive', 'forest']
-  },
-  {
-    id: '5',
-    title: 'Ancient Whispers',
-    slug: 'ancient-whispers',
-    description: 'Echoes from the depths of the forest',
-    releaseDate: '2023-08-15',
-    coverImage: getArtistImage('ghost-noize', 1) || '',
-    featured: false,
-    price: 9.99,
-    artist: { id: '1', name: 'Ghost Noize' },
-    tracks: [
-      { id: '8', title: 'Forest Whispers', duration: 420, preview: '#' },
-      { id: '9', title: 'Ancient Call', duration: 380, preview: '#' }
-    ],
-    tags: ['psytrance', 'dark', 'forest']
-  },
-  {
-    id: '6',
-    title: 'Ethereal Paths',
-    slug: 'ethereal-paths',
-    description: 'Journey through mystical dimensions',
-    releaseDate: '2023-07-20',
-    coverImage: getArtistImage('foe-xan', 1) || '',
-    featured: false,
-    price: 11.99,
-    artist: { id: '2', name: 'Foe Xan' },
-    tracks: [
-      { id: '10', title: 'Ethereal Journey', duration: 450, preview: '#' }
-    ],
-    tags: ['psytrance', 'ethereal', 'mystical']
-  }
-]
 
 export const useReleasesStore = defineStore('releases', () => {
-  const releases: Ref<Release[]> = ref([])
+  const releases: Ref<Release[]> = ref<Release[]>(verifiedReleases)
   const currentRelease: Ref<Release | null> = ref(null)
   const loading: Ref<boolean> = ref(false)
   const error: Ref<string | null> = ref(null)
@@ -115,17 +23,14 @@ export const useReleasesStore = defineStore('releases', () => {
   const { get } = useApi()
   
   // Computed
-  const allReleases: ComputedRef<Release[]> = computed(() => {
-    // Use store releases if available, otherwise fallback to mock data
-    return releases.value.length > 0 ? releases.value : mockReleases
-  })
+  const allReleases: ComputedRef<Release[]> = computed(() => releases.value)
   
   const featuredReleases: ComputedRef<Release[]> = computed(() => {
     return allReleases.value.filter(release => release.featured).slice(0, 4)
   })
   
   const latestReleases: ComputedRef<Release[]> = computed(() => {
-    return allReleases.value
+    return [...allReleases.value]
       .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime())
       .slice(0, 8)
   })
@@ -177,13 +82,12 @@ export const useReleasesStore = defineStore('releases', () => {
     try {
       console.log('[Releases Store] Fetching releases from database API...')
       const data: Release[] = await get('/releases')
-      releases.value = data
-      console.log(`[Releases Store] Successfully loaded ${releases.value.length} releases from database`)
+      if (Array.isArray(data) && data.length > 0) {
+        releases.value = data
+      }
+      console.log(`[Releases Store] Database release count: ${Array.isArray(data) ? data.length : 0}`)
     } catch (err: any) {
-      console.warn('[Releases Store] Database API unavailable, will use mock data as fallback:', err.message || err)
-      // Don't set error state - computed properties will use mock data as fallback
-      // Clear releases array so computed fallback works
-      releases.value = []
+      console.warn('[Releases Store] Database API unavailable. Verified catalog stays in place:', err.message || err)
     } finally {
       loading.value = false
     }
@@ -251,6 +155,9 @@ export const useReleasesStore = defineStore('releases', () => {
     try {
       console.log('[Releases Store] Fetching featured releases from database API...')
       const data: Release[] = await get('/releases/featured')
+      if (!Array.isArray(data) || data.length === 0) {
+        return
+      }
       
       // If releases array is empty, populate it with featured releases
       if (releases.value.length === 0) {
@@ -302,6 +209,9 @@ export const useReleasesStore = defineStore('releases', () => {
       // Try to fetch from database API
       try {
         const data: Release = await get(`/releases/${slug}`)
+        if (!data?.slug) {
+          throw new Error('Release not found')
+        }
         currentRelease.value = data
         // Add to releases array if not already there
         if (!releases.value.find(r => r.id === data.id)) {
@@ -332,13 +242,11 @@ export const useReleasesStore = defineStore('releases', () => {
           console.warn('[Releases Store] Bandcamp fetch also failed:', bandcampErr)
         }
         
-        // If all else fails, try mock data
-        const mockRelease = mockReleases.find(release => release.slug === slug)
-        if (mockRelease) {
-          console.log(`[Releases Store] Using mock data for "${slug}"`)
-          currentRelease.value = mockRelease
+        const catalogRelease = verifiedReleases.find(release => release.slug === slug)
+        if (catalogRelease) {
+          currentRelease.value = catalogRelease
           loading.value = false
-          return mockRelease
+          return catalogRelease
         }
         
         throw apiErr
@@ -355,7 +263,7 @@ export const useReleasesStore = defineStore('releases', () => {
   const getReleaseBySlug = (slug: string): Release | undefined => {
     const storeRelease = releases.value.find(release => release.slug === slug)
     if (storeRelease) return storeRelease
-    return mockReleases.find(release => release.slug === slug)
+    return verifiedReleases.find(release => release.slug === slug)
   }
   
   return {

@@ -55,9 +55,6 @@ backend/prisma/*.log
 backend/uploads/*
 !backend/uploads/.gitkeep
 
-# Docker
-.dockerignore
-
 # Build artifacts
 *.tgz
 *.tar.gz
@@ -68,6 +65,7 @@ backend/uploads/*
 .cache/
 
 # Secrets (never commit)
+.htpasswd/
 *.pem
 *.key
 credentials.json

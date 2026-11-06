@@ -7,19 +7,20 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'forest-black': '#0a0a0a',
-        'forest-green': '#14331e',
-        'mystical-gold': '#d4af37',
+        'forest-black': '#080B08',
+        'forest-green': '#183A28',
+        'mystical-gold': '#B9A36C',
         'green-accent': '#2a7a4a',
         'green-border': '#065f46',
-        'gray-light': '#e5e5e5',
-        'gray-medium': '#a1a1aa',
+        'gray-light': '#E9E6D9',
+        'gray-medium': '#A4A69B',
         'gray-dark': '#374151',
         'gold-text': '#d4af37'
       },
       fontFamily: {
         'fell': ['"IM Fell English"', 'serif'],
         'fell-sc': ['"IM Fell English SC"', 'serif'],
+        'ui': ['Figtree', '"Avenir Next"', '"Segoe UI"', 'sans-serif'],
       },
       boxShadow: {
         'gold-glow': '0 0 15px rgba(212, 175, 55, 0.5)',

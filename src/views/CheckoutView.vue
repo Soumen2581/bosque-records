@@ -65,7 +65,7 @@
                 <template v-if="cartStore.hasPhysicalItems">
                   <span v-if="cartStore.freeShippingProgress >= 100">FREE</span>
                   <span v-else class="text-gray-medium">Calculated next</span>
-                </span>
+                </template>
                 <span v-else class="text-gray-medium">Digital - Free</span>
               </span>
               <span v-else class="text-gray-light">

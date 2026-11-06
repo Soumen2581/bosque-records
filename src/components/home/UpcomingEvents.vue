@@ -1,43 +1,89 @@
 <template>
-  <section class="py-16 bg-gradient-to-b from-black via-forest-green to-black bg-opacity-70">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-12">
-        <h3 class="text-3xl title-font mb-4 text-mystical-gold">✦ UPCOMING EVENTS ✦</h3>
-        <MysticalDivider />
-      </div>
-      
-      <div class="max-w-4xl mx-auto">
-        <div 
-          v-for="i in 3" 
-          :key="i"
-          class="flex flex-col md:flex-row mb-8 border-b border-forest-green pb-8 last:border-b-0"
-        >
-          <div class="md:w-1/3 mb-4 md:mb-0">
-            <div class="border border-mystical-gold p-2 text-center">
-              <div class="text-4xl title-font text-mystical-gold">{{ 20 + i }}</div>
-              <div class="text-lg uppercase">July</div>
-              <div class="text-sm text-gray-medium">2024</div>
-            </div>
-          </div>
-          <div class="md:w-2/3">
-            <h4 class="text-2xl title-font mb-2">Forest Gathering {{ i }}</h4>
-            <p class="text-gray-medium mb-3">Ancient Grove, Sacred Forest</p>
-            <p class="text-gray-light mb-4">
-              A mystical journey through sound and consciousness in the heart of the ancient forest.
-            </p>
-            <router-link 
-              to="/events" 
-              class="text-sm text-mystical-gold hover:underline"
-            >
-              More Info & Tickets
-            </router-link>
-          </div>
-        </div>
-      </div>
+  <section class="events">
+    <div class="wrap">
+      <h2>Events</h2>
+      <ul v-if="eventsStore.upcomingEvents.length">
+        <li v-for="event in eventsStore.upcomingEvents" :key="event.id">
+          <router-link :to="`/events/${event.slug}`">
+            <span>{{ formatDate(event.date) }}</span>
+            <strong>{{ event.title }}</strong>
+            <em>{{ event.venue }}<template v-if="event.location">, {{ event.location }}</template></em>
+          </router-link>
+        </li>
+      </ul>
+      <p v-else class="empty">
+        No upcoming events are published.
+        <router-link to="/bookings">Book the label.</router-link>
+      </p>
     </div>
   </section>
 </template>
 
 <script setup>
-import MysticalDivider from '@/components/common/MysticalDivider.vue'
-</script> 
+import { useEventsStore } from '@/stores/events'
+
+const eventsStore = useEventsStore()
+
+const formatDate = (value) => {
+  const date = new Date(value)
+  if (Number.isNaN(date.getTime())) return ''
+  return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+}
+</script>
+
+<style scoped>
+.events {
+  padding: 4.5rem 6vw;
+}
+
+.wrap {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+h2 {
+  font-family: "IM Fell English", serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 400;
+  color: var(--ink);
+  margin: 0 0 1.5rem;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  display: grid;
+  gap: 0.2rem;
+  padding: 1.1rem 0;
+  border-top: 1px solid var(--line);
+  color: inherit;
+  text-decoration: none;
+}
+
+li:last-child a {
+  border-bottom: 1px solid var(--line);
+}
+
+span,
+em {
+  color: var(--muted);
+  font-style: normal;
+}
+
+strong {
+  font-family: "IM Fell English", serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+
+.empty a {
+  display: inline;
+  border: 0;
+  padding: 0;
+  color: var(--gold);
+}
+</style>

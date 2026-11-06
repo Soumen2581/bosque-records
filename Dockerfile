@@ -27,9 +27,6 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 # Copy custom nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copy password file for HTTP Basic Auth
-COPY .htpasswd/passwd /etc/nginx/.htpasswd/passwd
-
 # Expose port 80
 EXPOSE 80
 

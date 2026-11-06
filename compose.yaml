@@ -1,0 +1,31 @@
+name: bosque-records
+
+services:
+  api:
+    build:
+      context: ./backend
+    environment:
+      DATABASE_URL: file:/data/bosque.db
+    volumes:
+      - bosque-db:/data
+      - bosque-uploads:/app/uploads
+    ports:
+      - "8089:3001"
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "/dev/null", "http://localhost:3001/"]
+      interval: 10s
+      timeout: 5s
+      retries: 8
+      start_period: 25s
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+    ports:
+      - "8088:80"
+    restart: unless-stopped
+
+volumes:
+  bosque-db:
+  bosque-uploads:

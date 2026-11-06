@@ -1,48 +1,87 @@
 <template>
-  <section class="relative py-32 lg:py-48 overflow-hidden">
-    <!-- Background Logo with organic float -->
-    <div class="absolute inset-0 flex items-center justify-center opacity-10">
-      <img 
-        :src="bosqueRecordsLogo" 
-        alt="Bosque Records Logo" 
-        class="max-w-md max-h-md object-contain organic-float"
+  <section class="hero">
+    <div class="hero-copy">
+      <img
+        :src="bosqueRecordsLogo"
+        alt="Bosque Records"
+        class="hero-mark"
+        width="280"
+        height="160"
       >
-    </div>
-    
-    <div class="container mx-auto px-4 text-center relative z-10">
-      <h2 class="text-5xl md:text-7xl title-font mb-6 tracking-wider fade-in">
-        <span class="text-white inline-block slide-up" style="animation-delay: 0.1s;">UNLEASH YOUR MIND'S</span>
-        <br>
-        <span class="text-mystical-red inline-block slide-up" style="animation-delay: 0.2s;">PLAYGROUND</span>
-      </h2>
-      <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-10 text-gray-medium fade-in-delay-2">
-        Where ancient trees whisper secrets to the rhythm of the cosmos
-      </p>
-      <div class="flex flex-col sm:flex-row justify-center gap-4 sm:gap-6 fade-in-delay-3">
-        <router-link 
-          to="/releases"
-          class="px-8 py-3 bg-transparent border border-mystical-gold text-mystical-gold hover:bg-forest-green hover:bg-opacity-30 hover-glow organic-grow"
-        >
-          Explore Releases
-        </router-link>
-        <router-link 
-          to="/events"
-          class="px-8 py-3 bg-forest-green bg-opacity-70 hover:bg-opacity-100 text-white organic-grow"
-          style="animation-delay: 0.1s;"
-        >
-          Join the Ritual
-        </router-link>
+      <h1>A sanctuary of resonant frequencies</h1>
+      <p>{{ label.statement }}</p>
+      <div class="hero-actions">
+        <router-link to="/releases" class="action action-primary">Discover Music</router-link>
+        <router-link to="/roster" class="action">Explore Artists</router-link>
       </div>
     </div>
-    
-    <!-- Organic decorative elements -->
-    <div class="absolute top-20 left-10 w-2 h-2 bg-mystical-gold rounded-full organic-float opacity-40"></div>
-    <div class="absolute bottom-32 right-16 w-3 h-3 bg-forest-green rounded-full organic-float-delayed opacity-30"></div>
-    <div class="absolute top-1/2 left-20 w-1 h-1 bg-mystical-gold rounded-full organic-float opacity-50" style="animation-delay: 2s;"></div>
   </section>
 </template>
 
 <script setup>
 import bosqueRecordsLogo from '@/assets/styles/image/logos/Bosque Records Logo.png'
-// Hero section doesn't need any reactive data for now
-</script> 
+import { label } from '@/config/label'
+</script>
+
+<style scoped>
+.hero {
+  min-height: calc(100vh - 5.5rem);
+  display: grid;
+  align-items: end;
+  padding: 8vh 6vw 10vh;
+}
+
+.hero-copy {
+  max-width: 40rem;
+}
+
+.hero-mark {
+  width: min(16rem, 52vw);
+  height: auto;
+  margin-bottom: 1.75rem;
+}
+
+h1 {
+  font-family: "IM Fell English", serif;
+  font-weight: 400;
+  font-size: clamp(2.6rem, 6vw, 5.4rem);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0 0 1.25rem;
+}
+
+p {
+  max-width: 36rem;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin: 0 0 2rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.action {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0.65rem 1.15rem;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.action-primary {
+  background: var(--forest);
+  border-color: transparent;
+}
+
+.action:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 3px;
+}
+</style>

@@ -3,7 +3,8 @@ export interface Track {
   id: string
   title: string
   duration: number
-  preview: string
+  preview?: string
+  position?: number
 }
 
 export interface Artist {
@@ -32,7 +33,10 @@ export interface Release {
   releaseDate: string
   coverImage: string
   featured: boolean
-  price: number
+  price?: number
+  releaseType?: string
+  bandcampUrl?: string
+  embedUrl?: string
   artist: Pick<Artist, 'id' | 'name'>
   tracks: Track[]
   tags: string[]

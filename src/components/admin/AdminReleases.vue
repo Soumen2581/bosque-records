@@ -21,7 +21,7 @@
                 v-model="formData.title"
                 type="text"
                 required
-                placeholder="e.g., Shaman's Dream"
+                placeholder="Release title"
               />
             </div>
 
