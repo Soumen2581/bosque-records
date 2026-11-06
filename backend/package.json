@@ -12,7 +12,7 @@
   "dependencies": {
     "elysia": "^0.7.30",
     "@elysiajs/cors": "^0.7.1",
-    "@elysiajs/static": "^0.7.1",
+    "@elysiajs/static": "^1.4.10",
     "@prisma/client": "^4.16.2",
     "bcrypt": "^5.1.1",
     "stripe": "^14.21.0",
