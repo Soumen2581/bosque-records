@@ -6,7 +6,11 @@
     "dev": "vite --host 127.0.0.1 --port 8088",
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1 --port 8088",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src/App.tsx src/main.tsx src/motion.ts src/atmosphere.ts src/pages src/components/Layout.tsx src/components/Reveal.tsx src/components/TransitionLink.tsx src/components/Explorers.tsx src/components/NavIndicator.tsx src/components/Listen.tsx src/components/Cover.tsx src/components/LivingBackground.tsx src/lib src/config src/data eslint.config.js vite.config.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "ci": "npm run lint && npm run type-check && npm test && npm run build"
   },
   "dependencies": {
     "react": "^19.2.0",
@@ -14,10 +18,17 @@
     "react-router-dom": "^6.30.1"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.1",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
     "@vitejs/plugin-react": "^5.1.0",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.5.0",
     "typescript": "^5.9.2",
-    "vite": "^7.0.6"
+    "typescript-eslint": "^8.46.4",
+    "vite": "^7.0.6",
+    "vitest": "^3.2.4"
   }
 }

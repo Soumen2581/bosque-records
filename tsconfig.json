@@ -19,6 +19,7 @@
     "src/App.tsx",
     "src/vite-env.d.ts",
     "src/motion.ts",
+    "src/motion.test.ts",
     "src/atmosphere.ts",
     "src/pages/**/*",
     "src/components/*.ts",

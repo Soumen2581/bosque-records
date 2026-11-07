@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import { fileURLToPath, URL } from 'node:url'
 
@@ -22,5 +22,9 @@ export default defineConfig({
   preview: {
     port: 8088,
     host: '127.0.0.1'
+  },
+  test: {
+    environment: 'node',
+    include: ['src/**/*.test.ts']
   }
 })

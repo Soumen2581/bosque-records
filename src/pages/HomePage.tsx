@@ -36,7 +36,7 @@ export function HomePage() {
         <a className="scroll-cue" href="#identity">Continue</a>
       </section>
 
-      <Reveal as="section" className="section story-band" id="identity">
+      <Reveal as="section" className="section story-band" id="identity" variant="clip">
         <div className="story-copy">
           <h2>Forest frequencies for the underground</h2>
           <p className="lede">
@@ -50,7 +50,7 @@ export function HomePage() {
       </Reveal>
 
       {featured ? (
-        <Reveal as="section" className="section feature-release">
+        <Reveal as="section" className="section feature-release" variant="scale">
           <Cover src={featured.coverImage} title={featured.title} className="feature-cover" />
           <div className="feature-copy">
             <p className="meta">{featured.releaseType} · {formatDate(featured.releaseDate)}</p>
@@ -67,10 +67,15 @@ export function HomePage() {
         </Reveal>
       ) : null}
 
-      <ReleaseExplorer items={releases} title="Release discovery" />
-      <ArtistExplorer items={rosterArtists} />
+      <Reveal as="section" className="section explorer-stage" variant="fade">
+        <ReleaseExplorer items={releases} title="Release discovery" />
+      </Reveal>
 
-      <Reveal as="section" className="section story-band reverse">
+      <Reveal as="section" className="section explorer-stage" variant="fade" delay={40}>
+        <ArtistExplorer items={rosterArtists} />
+      </Reveal>
+
+      <Reveal as="section" className="section story-band reverse" variant="clip">
         <div className="story-copy">
           <h2>The label in the forest</h2>
           <p className="lede">{label.statement}</p>
@@ -83,7 +88,7 @@ export function HomePage() {
         <div className="story-panel" aria-hidden="true" />
       </Reveal>
 
-      <Reveal as="section" className="section events-strip">
+      <Reveal as="section" className="section events-strip" variant="rise">
         <div className="section-head">
           <h2>Gatherings</h2>
           <TransitionLink className="btn" to="/events">All events</TransitionLink>
@@ -92,7 +97,7 @@ export function HomePage() {
         <div className="event-rail">
           {pastEvents.map((event) => (
             <article key={event.id} className="event-tile">
-              {event.images[0] ? <img src={event.images[0]} alt="" /> : <div className="plate">{event.title}</div>}
+              {event.images[0] ? <img src={event.images[0]} alt="" loading="lazy" /> : <div className="plate">{event.title}</div>}
               <p className="meta">{formatEventDate(event)}</p>
               <h3>{event.title}</h3>
               <p className="meta">{event.place}</p>
@@ -103,7 +108,7 @@ export function HomePage() {
       </Reveal>
 
       {featured ? (
-        <Reveal as="section" className="section listen-band">
+        <Reveal as="section" className="section listen-band" variant="scale">
           <Cover src={featured.coverImage} title={featured.title} className="listen-cover" />
           <div>
             <h2>Listen on Bandcamp</h2>
@@ -118,7 +123,25 @@ export function HomePage() {
         </Reveal>
       ) : null}
 
-      <Reveal as="section" className="section finale">
+      <Reveal as="section" className="section timeline-band" variant="rise">
+        <div className="section-head">
+          <h2>Release timeline</h2>
+          <TransitionLink className="btn" to="/releases">Full catalog</TransitionLink>
+        </div>
+        <ol className="timeline">
+          {releases.map((release) => (
+            <li key={release.id}>
+              <TransitionLink to={`/releases/${release.slug}`}>
+                <span className="meta">{formatDate(release.releaseDate)}</span>
+                <strong>{release.title}</strong>
+                <span className="meta">{release.artist.name}</span>
+              </TransitionLink>
+            </li>
+          ))}
+        </ol>
+      </Reveal>
+
+      <Reveal as="section" className="section finale" variant="fade">
         <img className="mark" src={logo} alt="" />
         <h2>Bosque Records</h2>
         <p className="lede">{label.statement}</p>

@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
-import { NavLink, Outlet, useLocation, useNavigationType } from 'react-router-dom'
+import { Outlet, useLocation, useNavigationType } from 'react-router-dom'
 import { label } from '@/config/label'
 import { AtmosphereToggle, LivingBackground } from '@/components/LivingBackground'
 import { ListeningDock, ListenProvider } from '@/components/Listen'
 import { SlidingRail } from '@/components/NavIndicator'
+import { TransitionNavLink } from '@/components/TransitionLink'
 import mark from '@/assets/styles/image/logos/Bosque_Header.png'
 
 const links = [
@@ -39,9 +40,11 @@ function Frame() {
     window.scrollTo(0, 0)
   }, [location.pathname, navType])
 
-  useEffect(() => {
-    setOpen(false)
-  }, [location.pathname])
+  const [menuPath, setMenuPath] = useState(location.pathname)
+  if (location.pathname !== menuPath) {
+    setMenuPath(location.pathname)
+    if (open) setOpen(false)
+  }
 
   useEffect(() => {
     const onScroll = () => {
@@ -67,18 +70,18 @@ function Frame() {
       <div className="scroll-progress" style={{ transform: `scaleX(${progress})` }} aria-hidden="true" />
       <a className="skip" href="#content">Skip to content</a>
       <header className={compact || open ? 'top is-compact' : 'top'}>
-        <NavLink to="/" className="brand" onClick={() => setOpen(false)}>
+        <TransitionNavLink to="/" className="brand" onClick={() => setOpen(false)}>
           <img src={mark} alt="Bosque Records" />
-        </NavLink>
+        </TransitionNavLink>
         <button className="menu-btn" type="button" aria-expanded={open} aria-controls="primary-nav" onClick={() => setOpen((value) => !value)}>
           {open ? 'Close' : 'Menu'}
         </button>
         <nav id="primary-nav" className={open ? 'nav open' : 'nav'} aria-label="Primary">
           <SlidingRail activeKey={open ? null : activeNav} className="nav-rail">
             {links.map(([to, name]) => (
-              <NavLink key={to} to={to} data-indicator-key={to} onClick={() => setOpen(false)}>
+              <TransitionNavLink key={to} to={to} data-indicator-key={to} onClick={() => setOpen(false)}>
                 {name}
-              </NavLink>
+              </TransitionNavLink>
             ))}
           </SlidingRail>
         </nav>
@@ -105,9 +108,9 @@ function Frame() {
         <div>
           <h2>Label</h2>
           <ul>
-            <li><NavLink to="/bookings">Bookings</NavLink></li>
-            <li><NavLink to="/shop">Shop</NavLink></li>
-            <li><NavLink to="/visual-arts">Visual arts</NavLink></li>
+            <li><TransitionNavLink to="/bookings">Bookings</TransitionNavLink></li>
+            <li><TransitionNavLink to="/shop">Shop</TransitionNavLink></li>
+            <li><TransitionNavLink to="/visual-arts">Visual arts</TransitionNavLink></li>
           </ul>
         </div>
         <p className="legal">

@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 
 type Rect = { left: number; width: number; opacity: number }
 
@@ -8,7 +8,7 @@ export function useSlidingIndicator(activeKey: string | null) {
   const root = useRef<HTMLDivElement>(null)
   const [rect, setRect] = useState<Rect>(hidden)
 
-  const measure = () => {
+  const measure = useCallback(() => {
     const el = root.current
     if (!el || !activeKey) {
       setRect(hidden)
@@ -27,22 +27,21 @@ export function useSlidingIndicator(activeKey: string | null) {
       width: box.width,
       opacity: 1
     })
-  }
+  }, [activeKey])
 
-  useLayoutEffect(measure, [activeKey])
+  useLayoutEffect(measure, [measure])
 
   useEffect(() => {
     const el = root.current
     if (!el) return
-    const onResize = () => measure()
-    window.addEventListener('resize', onResize)
-    const observer = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(onResize) : null
+    window.addEventListener('resize', measure)
+    const observer = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(measure) : null
     observer?.observe(el)
     return () => {
-      window.removeEventListener('resize', onResize)
+      window.removeEventListener('resize', measure)
       observer?.disconnect()
     }
-  }, [activeKey])
+  }, [measure])
 
   return { root, rect }
 }

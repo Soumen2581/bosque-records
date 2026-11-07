@@ -1,5 +1,5 @@
-# Bosque Recordings - Vue3 Frontend
-# Multi-stage build for production
+# Bosque Records — React 19 + Vite frontend
+# Multi-stage build for production nginx static hosting
 
 # Stage 1: Build
 FROM node:20-alpine AS builder

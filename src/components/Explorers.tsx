@@ -68,7 +68,24 @@ function useCenteredIndex(count: number) {
   }
 
   function onPointerUp() {
+    const wasDragging = drag.current.moved
     drag.current.active = false
+    if (wasDragging) {
+      const el = scroller.current
+      if (!el) return
+      const center = el.scrollLeft + el.clientWidth / 2
+      let best = 0
+      let bestDistance = Number.POSITIVE_INFINITY
+      el.querySelectorAll<HTMLElement>('[data-card]').forEach((card, cardIndex) => {
+        const mid = card.offsetLeft + card.offsetWidth / 2
+        const distance = Math.abs(mid - center)
+        if (distance < bestDistance) {
+          bestDistance = distance
+          best = cardIndex
+        }
+      })
+      go(best)
+    }
   }
 
   return { scroller, index, go, onKey, onPointerDown, onPointerMove, onPointerUp, moved: () => drag.current.moved }
@@ -127,10 +144,12 @@ export function ReleaseExplorer({ items, title }: { items: Release[]; title: str
         ))}
       </div>
       <div className="progress" aria-hidden="true"><span style={{ width: `${((index + 1) / items.length) * 100}%` }} /></div>
-      <div className="focus-panel" aria-live="polite">
+      <div className="focus-panel" aria-live="polite" key={active.id}>
         <p className="meta">{active.releaseType} · {formatDate(active.releaseDate)} · {active.tracks.length} tracks</p>
         <h3>{active.title}</h3>
-        <p>{active.artist.name}</p>
+        <p>
+          <TransitionLink to={`/artists/${active.artist.id}`}>{active.artist.name}</TransitionLink>
+        </p>
         <div className="actions">
           <button type="button" className="btn solid" onClick={() => listen.open(active)}>Listen on Bandcamp</button>
           <TransitionLink className="btn" to={`/releases/${active.slug}`}>View release</TransitionLink>
@@ -171,6 +190,7 @@ export function ArtistExplorer({ items }: { items: ArtistSummary[] }) {
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
+        onPointerCancel={onPointerUp}
       >
         {items.map((artist, cardIndex) => (
           <article key={artist.id} data-card className={cardIndex === index ? 'is-active' : ''} aria-current={cardIndex === index ? 'true' : undefined}>
@@ -196,11 +216,18 @@ export function ArtistExplorer({ items }: { items: ArtistSummary[] }) {
         ))}
       </div>
       <div className="progress" aria-hidden="true"><span style={{ width: `${((index + 1) / items.length) * 100}%` }} /></div>
-      <div className="focus-panel" aria-live="polite">
-        <p className="meta">{active.releases.length ? `${active.releases.length} label ${active.releases.length === 1 ? 'release' : 'releases'}` : 'Bosque Records'}</p>
+      <div className="focus-panel" aria-live="polite" key={active.id}>
+        <p className="meta">
+          {active.role === 'label' ? 'Label roster' : active.role === 'release' ? 'Release artist' : active.role}
+          {active.releases.length ? ` · ${active.releases.length} ${active.releases.length === 1 ? 'release' : 'releases'}` : ''}
+        </p>
         <h3>{active.name}</h3>
         <p className="meta">{cover && !active.image ? `Shown with artwork from ${cover.title}. ` : ''}A published biography is not on file.</p>
-        <TransitionLink className="btn" to={`/artists/${active.id}`}>Open artist</TransitionLink>
+        <div className="actions">
+          <TransitionLink className="btn solid" to={`/artists/${active.id}`}>Open artist</TransitionLink>
+          {active.instagram ? <a className="btn" href={active.instagram} target="_blank" rel="noreferrer">Instagram</a> : null}
+          {cover ? <TransitionLink className="btn" to={`/releases/${cover.slug}`}>Related release</TransitionLink> : null}
+        </div>
       </div>
     </section>
   )

@@ -74,11 +74,11 @@ void main() {
     fbm(uv * aspect * 1.35 + vec2(time * 0.035, time * 0.02)),
     fbm(uv * aspect * 1.35 + vec2(4.2, -time * 0.028))
   );
-  vec2 displace = (flow - 0.5) * 0.055 * uEnergy;
-  float field = exp(-dist * dist * 7.5);
+  vec2 displace = (flow - 0.5) * 0.048 * uEnergy;
+  float field = exp(-dist * dist * 8.2);
   vec2 push = dist > 0.0008 ? pointer / dist : vec2(0.0);
-  displace += push * field * (0.04 + speed * 0.06) * uMotion;
-  float ripple = field * (0.55 + speed * 0.7);
+  displace += push * field * (0.032 + speed * 0.05) * uMotion;
+  float ripple = field * (0.48 + speed * 0.62);
   ripple += ink(uv, uTrail0, uW0, aspect);
   ripple += ink(uv, uTrail1, uW1, aspect) * 0.85;
   ripple += ink(uv, uTrail2, uW2, aspect) * 0.7;
@@ -102,7 +102,7 @@ void main() {
   color = mix(color, violet, smoothstep(0.72, 1.0, mid) * 0.1 * uEnergy);
   color = mix(color, uTint, 0.22 * uEnergy);
   vec3 liquid = mix(vec3(0.12, 0.22, 0.12), vec3(0.14, 0.08, 0.16), clamp(speed * 0.8, 0.0, 1.0));
-  color += liquid * ripple * 0.42 * uMotion;
+  color += liquid * ripple * 0.34 * uMotion;
   float vignette = smoothstep(1.25, 0.15, length((uv - 0.5) * vec2(1.15, 1.0)));
   color *= mix(0.55, 1.0, vignette);
   color += (hash(gl_FragCoord.xy) - 0.5) * 0.018;

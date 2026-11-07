@@ -15,15 +15,11 @@ export function prefersReducedMotion() {
 
 export function useReveal<T extends HTMLElement>(margin = '0px 0px -12% 0px'): [RefObject<T | null>, boolean] {
   const ref = useRef<T | null>(null)
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(() => prefersReducedMotion())
 
   useEffect(() => {
     const node = ref.current
-    if (!node) return
-    if (prefersReducedMotion()) {
-      setVisible(true)
-      return
-    }
+    if (!node || visible) return
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry?.isIntersecting) {
@@ -35,7 +31,7 @@ export function useReveal<T extends HTMLElement>(margin = '0px 0px -12% 0px'): [
     )
     observer.observe(node)
     return () => observer.disconnect()
-  }, [margin])
+  }, [margin, visible])
 
   return [ref, visible]
 }

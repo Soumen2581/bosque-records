@@ -40,7 +40,7 @@ export function ListeningDock() {
   const { release, player, togglePlayer, close } = useListen()
   if (!release) return null
   return (
-    <aside className="dock" aria-label="Selected release">
+    <aside className="dock is-open" aria-label="Selected release">
       <img src={release.coverImage} alt="" width="56" height="56" />
       <div>
         <strong>{release.title}</strong>
@@ -51,9 +51,9 @@ export function ListeningDock() {
       </button>
       <a className="btn solid" href={release.bandcampUrl} target="_blank" rel="noreferrer">Bandcamp</a>
       <button type="button" className="btn" onClick={close}>Close</button>
-      {player && (
+      {player ? (
         <iframe title={`${release.title} on Bandcamp`} src={release.embedUrl} loading="lazy" />
-      )}
+      ) : null}
     </aside>
   )
 }
