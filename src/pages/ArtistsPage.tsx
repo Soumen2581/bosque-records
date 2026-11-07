@@ -1,15 +1,20 @@
 import { useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { setTintFrom } from '@/atmosphere'
+import { TransitionLink } from '@/components/TransitionLink'
 import { artistById, artists, formatDate, rosterArtists, samePersonNote, type ArtistSummary } from '@/lib/catalog'
 
 function ArtistCard({ artist }: { artist: ArtistSummary }) {
   return (
-    <Link className="roster-card" to={`/artists/${artist.id}`}>
-      {artist.image ? <img src={artist.image} alt="" /> : artist.releases[0] ? <img src={artist.releases[0].coverImage} alt="" /> : <div className="plate">{artist.name}</div>}
+    <TransitionLink className="roster-card" to={`/artists/${artist.id}`}>
+      {artist.image
+        ? <img src={artist.image} alt="" style={{ viewTransitionName: `artist-${artist.id}` }} />
+        : artist.releases[0]
+          ? <img src={artist.releases[0].coverImage} alt="" style={{ viewTransitionName: `artist-${artist.id}` }} />
+          : <div className="plate" style={{ viewTransitionName: `artist-${artist.id}` }}>{artist.name}</div>}
       <strong>{artist.name}</strong>
       <span className="meta">{artist.releases.length ? `${artist.releases.length} release${artist.releases.length === 1 ? '' : 's'}` : 'Bosque Records'}</span>
-    </Link>
+    </TransitionLink>
   )
 }
 
@@ -34,32 +39,33 @@ export function ArtistPage() {
     if (artist) setTintFrom(artist.releases[0]?.slug ?? artist.id)
   }, [artist])
   if (!artist) {
-    return <div className="page"><h1>Artist not found</h1><Link to="/artists">Back to artists</Link></div>
+    return <div className="page"><h1>Artist not found</h1><TransitionLink to="/artists">Back to artists</TransitionLink></div>
   }
   const projects = artist.personId ? artists.filter((item) => item.personId === artist.personId && item.id !== artist.id) : []
+  const portrait = artist.image || artist.releases[0]?.coverImage
   return (
     <div className="page">
       <header className="page-head artist-head">
-        {artist.image ? <img src={artist.image} alt="" /> : null}
+        {portrait ? <img src={portrait} alt="" style={{ viewTransitionName: `artist-${artist.id}` }} /> : null}
         <div>
           <h1>{artist.name}</h1>
           <p className="lede">A published biography is not on file.</p>
           {projects.length ? <p>{samePersonNote}</p> : null}
           {projects.map((project) => (
-            <p key={project.id}><Link to={`/artists/${project.id}`}>{project.name}</Link></p>
+            <p key={project.id}><TransitionLink to={`/artists/${project.id}`}>{project.name}</TransitionLink></p>
           ))}
-          {artist.instagram ? <p><a href={artist.instagram}>Instagram</a></p> : null}
+          {artist.instagram ? <p><a href={artist.instagram} target="_blank" rel="noreferrer">Instagram</a></p> : null}
         </div>
       </header>
       {artist.releases.length ? (
         <ol className="index">
           {artist.releases.map((release) => (
             <li key={release.id}>
-              <Link to={`/releases/${release.slug}`}>
+              <TransitionLink to={`/releases/${release.slug}`}>
                 <span>{formatDate(release.releaseDate)}</span>
                 <strong>{release.title}</strong>
                 <span>{release.releaseType}</span>
-              </Link>
+              </TransitionLink>
             </li>
           ))}
         </ol>
@@ -70,10 +76,10 @@ export function ArtistPage() {
           <ol className="index">
             {artist.credits.map((credit) => (
               <li key={`${credit.release.id}-${credit.detail}`}>
-                <Link to={`/releases/${credit.release.slug}`}>
+                <TransitionLink to={`/releases/${credit.release.slug}`}>
                   <span>{credit.release.title}</span>
                   <strong>{credit.detail}</strong>
-                </Link>
+                </TransitionLink>
               </li>
             ))}
           </ol>

@@ -31,7 +31,7 @@ export function ReleasePage() {
       <div>
         <p className="kicker">{release.releaseType}</p>
         <h1>{release.title}</h1>
-        <p><Link to={`/artists/${release.artist.id}`}>{release.artist.name}</Link></p>
+        <p><TransitionLink to={`/artists/${release.artist.id}`}>{release.artist.name}</TransitionLink></p>
         <p className="meta">Bosque Records · {formatDate(release.releaseDate)}</p>
         <p><button type="button" className="btn solid" onClick={() => listen.open(release)}>Listen on Bandcamp</button></p>
         <table className="tracks">

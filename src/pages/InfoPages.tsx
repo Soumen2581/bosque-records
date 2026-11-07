@@ -1,19 +1,36 @@
 import { type ChangeEvent, type FormEvent, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Reveal } from '@/components/Reveal'
+import { TransitionLink } from '@/components/TransitionLink'
 import { label } from '@/config/label'
 import { formatEventDate, labelEvents } from '@/data/events'
-import { rosterArtists } from '@/lib/catalog'
+import { releases, rosterArtists } from '@/lib/catalog'
+import logo from '@/assets/styles/image/logos/Bosque Records Logo.png'
 
 const empty = { name: '', email: '', organization: '', artist: '', eventName: '', date: '', venue: '', city: '', eventType: 'Performance', message: '', company: '' }
 
 export function AboutPage() {
   return (
-    <div className="page">
+    <div className="page about-page">
       <header className="page-head">
         <h1>About</h1>
         <p className="lede">{label.statement}</p>
-        <p>The label publishes through <a href={label.links.bandcamp}>Bandcamp</a>. Further history is added only when it can be sourced.</p>
       </header>
+      <Reveal as="section" className="story-band about-band">
+        <div className="story-copy">
+          <h2>Published through Bandcamp</h2>
+          <p className="lede">
+            Releases, artists, and gatherings on this site come from the label catalog and public posts. Further history is added only when it can be sourced.
+          </p>
+          <div className="actions">
+            <a className="btn solid" href={label.links.bandcamp} target="_blank" rel="noreferrer">Bandcamp</a>
+            <TransitionLink className="btn" to="/contact">Contact</TransitionLink>
+          </div>
+        </div>
+        <div className="story-art" aria-hidden="true">
+          <img src={logo} alt="" />
+        </div>
+      </Reveal>
     </div>
   )
 }
@@ -79,10 +96,10 @@ function EventCard({ event }: { event: (typeof labelEvents)[number] }) {
         {event.artists.length ? (
           <div className="event-artists">
             {event.artists.map((artist) => (
-              <Link key={artist.id} to={`/artists/${artist.id}`}>
+              <TransitionLink key={artist.id} to={`/artists/${artist.id}`}>
                 <img src={artist.image} alt="" />
                 <span>{artist.name}</span>
-              </Link>
+              </TransitionLink>
             ))}
           </div>
         ) : null}
@@ -109,8 +126,21 @@ export function VisualPage() {
     <div className="page">
       <header className="page-head">
         <h1>Visual arts</h1>
-        <p className="lede">Artwork credits will appear here when the label publishes them. Album covers stay on their release pages.</p>
+        <p className="lede">
+          Label artwork as it appears on published releases. Separate artwork credits appear here when the label publishes them.
+        </p>
       </header>
+      <div className="visual-gallery">
+        {releases.map((release) => (
+          <TransitionLink key={release.id} to={`/releases/${release.slug}`} className="visual-tile">
+            <img src={release.coverImage} alt="" style={{ viewTransitionName: `art-${release.slug}` }} />
+            <span>
+              <strong>{release.title}</strong>
+              <em>{release.artist.name}</em>
+            </span>
+          </TransitionLink>
+        ))}
+      </div>
     </div>
   )
 }

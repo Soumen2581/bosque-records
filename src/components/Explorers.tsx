@@ -37,8 +37,7 @@ function useCenteredIndex(count: number) {
     const card = el?.querySelectorAll<HTMLElement>('[data-card]')[next]
     if (!el || !card) return
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const left = card.offsetLeft - (el.clientWidth - card.offsetWidth) / 2
-    el.scrollTo({ left, behavior: reduce ? 'auto' : 'smooth' })
+    card.scrollIntoView({ inline: 'center', block: 'nearest', behavior: reduce ? 'auto' : 'smooth' })
   }
 
   function onKey(event: KeyboardEvent) {
@@ -88,8 +87,8 @@ export function ReleaseExplorer({ items, title }: { items: Release[]; title: str
     <section className="explorer-block" id="discography">
       <header className="explorer-head">
         <div>
-          <p className="kicker">Discography</p>
           <h2>{title}</h2>
+          <p className="meta">{index + 1} / {items.length}</p>
         </div>
         <div className="explorer-controls">
           <button type="button" className="btn" onClick={() => go(Math.max(0, index - 1))} disabled={index === 0}>Previous</button>
@@ -128,9 +127,8 @@ export function ReleaseExplorer({ items, title }: { items: Release[]; title: str
         ))}
       </div>
       <div className="progress" aria-hidden="true"><span style={{ width: `${((index + 1) / items.length) * 100}%` }} /></div>
-      <p className="meta">{index + 1} / {items.length}</p>
       <div className="focus-panel" aria-live="polite">
-        <p className="kicker">{active.releaseType} · {formatDate(active.releaseDate)} · {active.tracks.length} tracks</p>
+        <p className="meta">{active.releaseType} · {formatDate(active.releaseDate)} · {active.tracks.length} tracks</p>
         <h3>{active.title}</h3>
         <p>{active.artist.name}</p>
         <div className="actions">
@@ -155,8 +153,8 @@ export function ArtistExplorer({ items }: { items: ArtistSummary[] }) {
     <section className="explorer-block">
       <header className="explorer-head">
         <div>
-          <p className="kicker">Artists</p>
           <h2>The artists</h2>
+          <p className="meta">{index + 1} / {items.length}</p>
         </div>
         <div className="explorer-controls">
           <button type="button" className="btn" onClick={() => go(Math.max(0, index - 1))} disabled={index === 0}>Previous</button>
@@ -184,14 +182,22 @@ export function ArtistExplorer({ items }: { items: ArtistSummary[] }) {
               }}
             >
               {artist.image || artist.releases[0]?.coverImage
-                ? <img src={artist.image || artist.releases[0]?.coverImage} alt="" draggable={false} />
+                ? (
+                  <img
+                    src={artist.image || artist.releases[0]?.coverImage}
+                    alt=""
+                    draggable={false}
+                    style={{ viewTransitionName: cardIndex === index ? `artist-${artist.id}` : 'none' }}
+                  />
+                )
                 : <div className="plate">{artist.name}</div>}
             </TransitionLink>
           </article>
         ))}
       </div>
+      <div className="progress" aria-hidden="true"><span style={{ width: `${((index + 1) / items.length) * 100}%` }} /></div>
       <div className="focus-panel" aria-live="polite">
-        <p className="kicker">{active.releases.length ? `${active.releases.length} label ${active.releases.length === 1 ? 'release' : 'releases'}` : 'Bosque Records'}</p>
+        <p className="meta">{active.releases.length ? `${active.releases.length} label ${active.releases.length === 1 ? 'release' : 'releases'}` : 'Bosque Records'}</p>
         <h3>{active.name}</h3>
         <p className="meta">{cover && !active.image ? `Shown with artwork from ${cover.title}. ` : ''}A published biography is not on file.</p>
         <TransitionLink className="btn" to={`/artists/${active.id}`}>Open artist</TransitionLink>

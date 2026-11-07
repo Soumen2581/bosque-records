@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import { Cover } from '@/components/Cover'
+import { TransitionLink } from '@/components/TransitionLink'
 import { artists, formatDate, releases, releaseTypes, years } from '@/lib/catalog'
 
 export function ReleasesPage() {
@@ -59,12 +60,12 @@ export function ReleasesPage() {
       {visible.length === 0 ? <p>No releases match those filters.</p> : (
         <div className="catalog">
           {visible.map((release) => (
-            <Link key={release.id} to={`/releases/${release.slug}`}>
-              <Cover src={release.coverImage} title={release.title} />
+            <TransitionLink key={release.id} to={`/releases/${release.slug}`} className="catalog-card">
+              <Cover src={release.coverImage} title={release.title} transitionName={`art-${release.slug}`} />
               <h2>{release.title}</h2>
               <p>{release.artist.name}</p>
               <p>{release.releaseType} · {formatDate(release.releaseDate)}</p>
-            </Link>
+            </TransitionLink>
           ))}
         </div>
       )}

@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { SlidingRail } from '@/components/NavIndicator'
 import { TransitionLink } from '@/components/TransitionLink'
 import { formatDate, releases, rosterArtists } from '@/lib/catalog'
 
@@ -41,13 +42,23 @@ export function DiscoverPage() {
         <h1>Discover</h1>
         <p className="lede">The published Bosque Records catalog. Compilations stay separate from single-artist releases.</p>
       </header>
-      <div className="tabs" role="tablist" aria-label="Catalog">
-        {tabs.map(([id, label]) => (
-          <button key={id} type="button" role="tab" aria-selected={tab === id} className={tab === id ? 'is-on' : ''} onClick={() => setTab(id)}>
-            {label}
-          </button>
-        ))}
-      </div>
+      <SlidingRail activeKey={tab} className="tabs" >
+        <div role="tablist" aria-label="Catalog" className="tab-row">
+          {tabs.map(([id, label]) => (
+            <button
+              key={id}
+              type="button"
+              role="tab"
+              aria-selected={tab === id}
+              data-indicator-key={id}
+              className={tab === id ? 'is-on' : ''}
+              onClick={() => setTab(id)}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </SlidingRail>
       <form className="filters" onSubmit={(event) => event.preventDefault()}>
         <input
           aria-label="Search"
@@ -61,30 +72,32 @@ export function DiscoverPage() {
           }}
         />
       </form>
-      {tab === 'artists' ? (
-        <div className="artists">
-          {artistList.map((artist) => (
-            <TransitionLink key={artist.id} to={`/artists/${artist.id}`}>
-              {artist.name}
-              <span className="meta">{artist.releases.length}</span>
-            </TransitionLink>
-          ))}
-        </div>
-      ) : (
-        <ol className="index">
-          {releaseList.map((release) => (
-            <li key={release.id}>
-              <TransitionLink to={`/releases/${release.slug}`}>
-                <span>{formatDate(release.releaseDate)}</span>
-                <strong>{release.title}</strong>
-                <span>{release.artist.name}</span>
+      <div className="discover-pane" key={tab}>
+        {tab === 'artists' ? (
+          <div className="artists">
+            {artistList.map((artist) => (
+              <TransitionLink key={artist.id} to={`/artists/${artist.id}`}>
+                {artist.name}
+                <span className="meta">{artist.releases.length}</span>
               </TransitionLink>
-            </li>
-          ))}
-        </ol>
-      )}
-      {tab !== 'artists' && releaseList.length === 0 && <p>No releases match.</p>}
-      {tab === 'artists' && artistList.length === 0 && <p>No artists match.</p>}
+            ))}
+          </div>
+        ) : (
+          <ol className="index">
+            {releaseList.map((release) => (
+              <li key={release.id}>
+                <TransitionLink to={`/releases/${release.slug}`}>
+                  <span>{formatDate(release.releaseDate)}</span>
+                  <strong>{release.title}</strong>
+                  <span>{release.artist.name}</span>
+                </TransitionLink>
+              </li>
+            ))}
+          </ol>
+        )}
+        {tab !== 'artists' && releaseList.length === 0 && <p>No releases match.</p>}
+        {tab === 'artists' && artistList.length === 0 && <p>No artists match.</p>}
+      </div>
     </div>
   )
 }

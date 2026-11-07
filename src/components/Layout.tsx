@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { NavLink, Outlet, useLocation, useNavigationType } from 'react-router-dom'
 import { label } from '@/config/label'
 import { AtmosphereToggle, LivingBackground } from '@/components/LivingBackground'
 import { ListeningDock, ListenProvider } from '@/components/Listen'
+import { SlidingRail } from '@/components/NavIndicator'
 import mark from '@/assets/styles/image/logos/Bosque_Header.png'
 
 const links = [
@@ -25,8 +26,13 @@ export function Layout() {
 function Frame() {
   const [open, setOpen] = useState(false)
   const [progress, setProgress] = useState(0)
+  const [compact, setCompact] = useState(false)
   const location = useLocation()
   const navType = useNavigationType()
+  const activeNav = useMemo(() => {
+    const match = links.find(([to]) => location.pathname === to || location.pathname.startsWith(`${to}/`))
+    return match?.[0] ?? null
+  }, [location.pathname])
 
   useEffect(() => {
     if (navType === 'POP') return
@@ -34,33 +40,47 @@ function Frame() {
   }, [location.pathname, navType])
 
   useEffect(() => {
+    setOpen(false)
+  }, [location.pathname])
+
+  useEffect(() => {
     const onScroll = () => {
       const height = document.documentElement.scrollHeight - window.innerHeight
       setProgress(height > 0 ? Math.min(1, window.scrollY / height) : 0)
+      setCompact(window.scrollY > 28)
     }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [open])
+
   return (
     <div className="shell">
       <LivingBackground />
-      <div className="scroll-progress" style={{ transform: `scaleX(${progress})` }} />
+      <div className="scroll-progress" style={{ transform: `scaleX(${progress})` }} aria-hidden="true" />
       <a className="skip" href="#content">Skip to content</a>
-      <header className="top">
+      <header className={compact || open ? 'top is-compact' : 'top'}>
         <NavLink to="/" className="brand" onClick={() => setOpen(false)}>
           <img src={mark} alt="Bosque Records" />
         </NavLink>
-        <button className="menu-btn" type="button" aria-expanded={open} onClick={() => setOpen((value) => !value)}>
+        <button className="menu-btn" type="button" aria-expanded={open} aria-controls="primary-nav" onClick={() => setOpen((value) => !value)}>
           {open ? 'Close' : 'Menu'}
         </button>
-        <nav className={open ? 'nav open' : 'nav'} aria-label="Primary">
-          {links.map(([to, name]) => (
-            <NavLink key={to} to={to} onClick={() => setOpen(false)}>
-              {name}
-            </NavLink>
-          ))}
+        <nav id="primary-nav" className={open ? 'nav open' : 'nav'} aria-label="Primary">
+          <SlidingRail activeKey={open ? null : activeNav} className="nav-rail">
+            {links.map(([to, name]) => (
+              <NavLink key={to} to={to} data-indicator-key={to} onClick={() => setOpen(false)}>
+                {name}
+              </NavLink>
+            ))}
+          </SlidingRail>
         </nav>
       </header>
       <main id="content">
