@@ -14,5 +14,17 @@
     "baseUrl": ".",
     "paths": { "@/*": ["src/*"] }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"]
+  "include": [
+    "src/main.tsx",
+    "src/App.tsx",
+    "src/vite-env.d.ts",
+    "src/motion.ts",
+    "src/atmosphere.ts",
+    "src/pages/**/*",
+    "src/components/*.ts",
+    "src/components/*.tsx",
+    "src/config/**/*",
+    "src/lib/**/*",
+    "src/data/**/*"
+  ]
 }

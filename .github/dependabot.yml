@@ -3,10 +3,10 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
       day: "monday"
       time: "09:00"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 3
     labels:
       - "dependencies"
       - "automated"
@@ -17,36 +17,63 @@ updates:
       frontend:
         patterns:
           - "*"
-        exclude-patterns:
-          - "@types/*"
-      types:
-        patterns:
-          - "@types/*"
+        update-types:
+          - "minor"
+          - "patch"
 
   - package-ecosystem: "npm"
     directory: "/backend"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
       day: "monday"
       time: "09:00"
-    open-pull-requests-limit: 10
+    open-pull-requests-limit: 2
     labels:
       - "dependencies"
       - "automated"
     commit-message:
       prefix: "chore"
       include: "scope"
+    groups:
+      backend:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+    ignore:
+      - dependency-name: "prisma"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@prisma/client"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "elysia"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "stripe"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "express"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "nodemailer"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "bcrypt"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
       day: "monday"
       time: "09:00"
-    open-pull-requests-limit: 5
+    open-pull-requests-limit: 2
     labels:
       - "ci"
       - "automated"
     commit-message:
       prefix: "ci"
       include: "scope"
+    groups:
+      actions:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
