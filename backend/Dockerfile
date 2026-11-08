@@ -1,21 +1,20 @@
 # Bosque Recordings - Bun Backend
-FROM oven/bun:1-debian
+FROM oven/bun:1.2.21-debian
 
 WORKDIR /app
 
 # Install OpenSSL for Prisma compatibility
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     openssl \
-    libssl-dev \
     ca-certificates \
     wget \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy package files
-COPY package.json bun.lock* ./
+COPY package.json bun.lock ./
 
 # Install dependencies
-RUN bun install --frozen-lockfile || bun install
+RUN bun install --frozen-lockfile
 
 # Copy prisma schema first (for generation)
 COPY prisma ./prisma/
