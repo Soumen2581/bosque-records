@@ -1,0 +1,12 @@
+---
+description: Only push/update the personal GitHub remote; never touch TribeWarez
+alwaysApply: true
+---
+
+# Git remotes — personal only
+
+- **Allowed remote for push/update/delete:** `personal` → `https://github.com/Soumen2581/bosque-records.git`
+- **Forbidden:** any write to TribeWarez remotes (`origin` when it points at TribeWarez, `TribeWarez/bosque-records`, `TribeWarez/cus_bosque-records`).
+- Do **not** `git push origin`, delete TribeWarez branches, change TribeWarez settings, or open/merge PRs against TribeWarez unless the user explicitly overrides this rule in the current message.
+- Default: `git push personal HEAD` / `git push -u personal main` for publishes.
+- Reads/fetches from TribeWarez are allowed only if needed for comparison; prefer `personal` as the source of truth.
