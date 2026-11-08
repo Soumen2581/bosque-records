@@ -50,5 +50,13 @@ export default tseslint.config(
     languageOptions: {
       globals: globals.node
     }
+  },
+  {
+    // React Bits ports use render-time ref mirrors and mount flags by design.
+    files: ['src/bits/**/*.{ts,tsx}'],
+    rules: {
+      'react-hooks/set-state-in-effect': 'off',
+      'react-hooks/refs': 'off'
+    }
   }
 )

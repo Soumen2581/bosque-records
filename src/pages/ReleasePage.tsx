@@ -1,8 +1,8 @@
+import { useEffect, type CSSProperties } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { Cover } from '@/components/Cover'
+import { GlareHover, ScrollReveal, SpotlightCard, TiltedCard } from '@/bits'
 import { useListen } from '@/components/Listen'
 import { TransitionLink } from '@/components/TransitionLink'
-import { useEffect } from 'react'
 import { setTintFrom } from '@/atmosphere'
 import { formatDate, formatDuration, releaseBySlug, releases } from '@/lib/catalog'
 
@@ -25,15 +25,59 @@ export function ReleasePage() {
 
   return (
     <article className="page release">
-      <div>
-        <Cover src={release.coverImage} title={release.title} transitionName={`art-${release.slug}`} />
+      <div className="release-art">
+        <TiltedCard
+          imageSrc={release.coverImage}
+          altText={release.title}
+          captionText=""
+          containerHeight="100%"
+          containerWidth="100%"
+          imageHeight="100%"
+          imageWidth="100%"
+          scaleOnHover={1.02}
+          rotateAmplitude={6}
+          showTooltip={false}
+          glare={0.18}
+          glareColor="rgba(233, 230, 217, 0.35)"
+          shadow={0.35}
+          radius={4}
+          className="release-tilt"
+          style={{ viewTransitionName: `art-${release.slug}` } as CSSProperties}
+        />
       </div>
       <div>
         <p className="kicker">{release.releaseType}</p>
         <h1>{release.title}</h1>
         <p><TransitionLink to={`/artists/${release.artist.id}`}>{release.artist.name}</TransitionLink></p>
         <p className="meta">Bosque Records · {formatDate(release.releaseDate)}</p>
-        <p><button type="button" className="btn solid" onClick={() => listen.open(release)}>Listen on Bandcamp</button></p>
+        <ScrollReveal
+          tag="p"
+          effect="fade"
+          mode="enter"
+          splitBy="words"
+          enableBlur={false}
+          baseOpacity={0.25}
+          stagger={0.025}
+          containerClassName="release-reveal meta"
+        >
+          {release.tracks.length} tracks. Playback and purchase stay on Bandcamp.
+        </ScrollReveal>
+        <p>
+          <GlareHover
+            className="glare-btn"
+            glareColor="#B49A66"
+            glareOpacity={0.2}
+            softness={0.75}
+            variant="sheen"
+            mode="hover"
+            borderRadius="0"
+            background="transparent"
+            width="auto"
+            height="auto"
+          >
+            <button type="button" className="btn solid" onClick={() => listen.open(release)}>Listen on Bandcamp</button>
+          </GlareHover>
+        </p>
         <table className="tracks">
           <tbody>
             {release.tracks.map((track) => (
@@ -48,9 +92,21 @@ export function ReleasePage() {
         {related.length > 0 && (
           <>
             <h2>More from {release.artist.name}</h2>
-            <ul>
+            <ul className="related-list">
               {related.map((item) => (
-                <li key={item.id}><TransitionLink to={`/releases/${item.slug}`}>{item.title}</TransitionLink></li>
+                <li key={item.id}>
+                  <SpotlightCard
+                    className="related-spot bosque-spot"
+                    spotlightColor="rgba(15, 39, 34, 0.55)"
+                    intensity={0.16}
+                    spotlightSize={180}
+                    softness={0.8}
+                    borderGlow={0.3}
+                    flare={false}
+                  >
+                    <TransitionLink to={`/releases/${item.slug}`}>{item.title}</TransitionLink>
+                  </SpotlightCard>
+                </li>
               ))}
             </ul>
           </>

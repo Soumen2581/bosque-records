@@ -79,17 +79,18 @@ const profiles: Record<string, Partial<ArtistSummary>> = {
   'foe-xan': {
     role: 'label',
     image: portraits['foe-xan'],
-    instagram: 'https://www.instagram.com/fo3xan'
+    instagram: 'https://www.instagram.com/fo3xan.bosque/'
   },
   'cosmik-frequency': {
     role: 'label',
     image: portraits['cosmik-frequency'],
-    instagram: 'https://www.instagram.com/Cosmik_Frequency/'
+    instagram: 'https://www.instagram.com/cosmik_frequency/'
   },
   'ghost-noize': {
     name: 'Ghost Noize',
     role: 'label',
-    image: portraits['ghost-noize']
+    image: portraits['ghost-noize'],
+    instagram: 'https://www.instagram.com/ghost_noize/'
   },
   brainwavez: {
     name: 'Brainwavez',
@@ -105,13 +106,68 @@ const profiles: Record<string, Partial<ArtistSummary>> = {
   },
   n3xu5: {
     name: 'N3xu5',
-    role: 'label'
+    role: 'label',
+    image: portraits.n3xu5,
+    instagram: 'https://www.instagram.com/n3xu5_psy/'
+  },
+  cariy: {
+    name: 'Ācariyã',
+    image: portraits.acariya,
+    instagram: 'https://www.instagram.com/acariyapsy/'
+  },
+  'dinosaur-spaceship': {
+    name: 'Dinosaur Spaceship',
+    role: 'guest',
+    image: portraits['dinosaur-spaceship'],
+    instagram: 'https://www.instagram.com/dinosaur_spaceship/'
+  },
+  inpsydnoize: {
+    name: 'Inpsydnoize',
+    role: 'guest',
+    image: portraits.inpsydnoize,
+    instagram: 'https://www.instagram.com/inpsydnoize/'
+  },
+  'psychic-reptiles': {
+    name: 'Psychic Reptiles',
+    role: 'guest',
+    image: portraits['psychic-reptiles'],
+    instagram: 'https://www.instagram.com/psychicreptiles/'
+  },
+  svaaha: {
+    name: 'Svaaha',
+    role: 'guest',
+    image: portraits.svaaha,
+    instagram: 'https://www.instagram.com/_svaaha_/'
+  },
+  tetzo: {
+    name: 'Tetzo',
+    role: 'guest',
+    image: portraits.tetzo,
+    instagram: 'https://www.instagram.com/tetzo_burninginocean/'
+  },
+  xhanok: {
+    name: 'Xhanok',
+    role: 'guest',
+    image: portraits.xhanok,
+    instagram: 'https://www.instagram.com/xhanok_music/'
+  },
+  zyamaliman: {
+    name: 'Zyamaliman',
+    role: 'guest',
+    image: portraits.zyamaliman,
+    instagram: 'https://www.instagram.com/zyamaliman.live/'
   }
 }
 
 for (const [id, profile] of Object.entries(profiles)) {
-  const artist = ensure(id, profile.name ?? id, profile.role ?? 'label')
-  Object.assign(artist, profile)
+  const artist = ensure(id, profile.name ?? id, profile.role ?? 'guest')
+  const { role, ...rest } = profile
+  Object.assign(artist, rest)
+  if (role && (artist.role === 'guest' || role === 'label' || role === 'release')) {
+    if (!(artist.role === 'label' && role === 'guest') && !(artist.role === 'release' && role === 'guest')) {
+      artist.role = role
+    }
+  }
 }
 
 const idByName = new Map<string, string>()

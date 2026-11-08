@@ -43,4 +43,20 @@ describe('catalog', () => {
     expect(formatDuration(125)).toBe('2:05')
     expect(formatDuration(0)).toBe('')
   })
+
+  it('gives Brainwavez and IxMuk distinct portrait assets', () => {
+    const brainwavez = artistById('brainwavez')
+    const ixmuk = artistById('ixmuk')
+    expect(brainwavez?.image).toBeTruthy()
+    expect(ixmuk?.image).toBeTruthy()
+    expect(brainwavez?.image).not.toBe(ixmuk?.image)
+  })
+
+  it('keeps Bandcamp listen URLs on every release', () => {
+    for (const release of releases) {
+      expect(release.bandcampUrl).toMatch(/^https:\/\/.*bandcamp\.com\//)
+      expect(release.coverImage).toBeTruthy()
+      expect(release.tracks.length).toBeGreaterThan(0)
+    }
+  })
 })

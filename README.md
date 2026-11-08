@@ -30,9 +30,15 @@ docker compose up --build -d api
 
 ## Local frontend (without Docker)
 
+Use **Node 20** (see `.nvmrc`). Node 22+ / 26 currently hangs `typescript-eslint` and `tsc` in this repo on some macOS hosts.
+
 ```bash
+export PATH="/opt/homebrew/opt/node@20/bin:$PATH"   # if needed
 npm install --legacy-peer-deps
-npm run dev
+npm run ci                                          # lint + typecheck + test + build
+npm run dev                                         # http://127.0.0.1:8088
+# or serve the production build:
+npm run build && npm run serve:dist
 ```
 
 ## Scripts
@@ -41,9 +47,11 @@ npm run dev
 | --- | --- |
 | `npm run dev` | Vite on 127.0.0.1:8088 |
 | `npm run build` | Production build |
+| `npm run serve:dist` | Static SPA serve of `dist/` on 8088 |
 | `npm run type-check` | TypeScript |
 | `npm run lint` | ESLint (React app sources) |
 | `npm test` | Vitest unit tests |
+| `npm run audit:prod` | Production dependency audit |
 | `npm run ci` | lint + type-check + test + build |
 
 Backend:

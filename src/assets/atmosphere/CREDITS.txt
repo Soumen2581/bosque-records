@@ -1,0 +1,2 @@
+forest-wallpaper.* — cinematic dark forest wallpaper derived locally from an Unsplash forest canopy photograph (Unsplash license), color-graded for Bosque Records atmosphere.
+forest-night.* — source canopy photograph retained for regenerating the graded wallpaper.

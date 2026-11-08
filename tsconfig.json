@@ -24,6 +24,7 @@
     "src/pages/**/*",
     "src/components/*.ts",
     "src/components/*.tsx",
+    "src/bits/**/*",
     "src/config/**/*",
     "src/lib/**/*",
     "src/data/**/*"

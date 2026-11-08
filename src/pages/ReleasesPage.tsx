@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { SpotlightCard } from '@/bits'
 import { Cover } from '@/components/Cover'
 import { TransitionLink } from '@/components/TransitionLink'
 import { artists, formatDate, releases, releaseTypes, years } from '@/lib/catalog'
@@ -60,12 +61,24 @@ export function ReleasesPage() {
       {visible.length === 0 ? <p>No releases match those filters.</p> : (
         <div className="catalog">
           {visible.map((release) => (
-            <TransitionLink key={release.id} to={`/releases/${release.slug}`} className="catalog-card">
-              <Cover src={release.coverImage} title={release.title} transitionName={`art-${release.slug}`} />
-              <h2>{release.title}</h2>
-              <p>{release.artist.name}</p>
-              <p>{release.releaseType} · {formatDate(release.releaseDate)}</p>
-            </TransitionLink>
+            <SpotlightCard
+              key={release.id}
+              className="catalog-spot bosque-spot"
+              spotlightColor="rgba(101, 118, 83, 0.32)"
+              intensity={0.2}
+              spotlightSize={260}
+              softness={0.72}
+              borderGlow={0.4}
+              flare={false}
+              grain={0.06}
+            >
+              <TransitionLink to={`/releases/${release.slug}`} className="catalog-card">
+                <Cover src={release.coverImage} title={release.title} transitionName={`art-${release.slug}`} />
+                <h2>{release.title}</h2>
+                <p>{release.artist.name}</p>
+                <p>{release.releaseType} · {formatDate(release.releaseDate)}</p>
+              </TransitionLink>
+            </SpotlightCard>
           ))}
         </div>
       )}

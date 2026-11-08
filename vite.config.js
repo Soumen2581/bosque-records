@@ -24,7 +24,7 @@ export default defineConfig({
     host: '127.0.0.1'
   },
   test: {
-    environment: 'node',
+    environment: 'happy-dom',
     include: ['src/**/*.test.ts']
   }
 })

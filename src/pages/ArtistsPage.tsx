@@ -1,20 +1,32 @@
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import { ScrollReveal, SpotlightCard } from '@/bits'
 import { setTintFrom } from '@/atmosphere'
 import { TransitionLink } from '@/components/TransitionLink'
 import { artistById, artists, formatDate, rosterArtists, samePersonNote, type ArtistSummary } from '@/lib/catalog'
 
 function ArtistCard({ artist }: { artist: ArtistSummary }) {
   return (
-    <TransitionLink className="roster-card" to={`/artists/${artist.id}`}>
-      {artist.image
-        ? <img src={artist.image} alt="" style={{ viewTransitionName: `artist-${artist.id}` }} />
-        : artist.releases[0]
-          ? <img src={artist.releases[0].coverImage} alt="" style={{ viewTransitionName: `artist-${artist.id}` }} />
-          : <div className="plate" style={{ viewTransitionName: `artist-${artist.id}` }}>{artist.name}</div>}
-      <strong>{artist.name}</strong>
-      <span className="meta">{artist.releases.length ? `${artist.releases.length} release${artist.releases.length === 1 ? '' : 's'}` : 'Bosque Records'}</span>
-    </TransitionLink>
+    <SpotlightCard
+      className="roster-spot bosque-spot"
+      spotlightColor="rgba(101, 118, 83, 0.3)"
+      intensity={0.18}
+      spotlightSize={240}
+      softness={0.75}
+      borderGlow={0.35}
+      flare={false}
+      grain={0.05}
+    >
+      <TransitionLink className="roster-card" to={`/artists/${artist.id}`}>
+        {artist.image
+          ? <img src={artist.image} alt="" style={{ viewTransitionName: `artist-${artist.id}` }} />
+          : artist.releases[0]
+            ? <img src={artist.releases[0].coverImage} alt="" style={{ viewTransitionName: `artist-${artist.id}` }} />
+            : <div className="plate" style={{ viewTransitionName: `artist-${artist.id}` }}>{artist.name}</div>}
+        <strong>{artist.name}</strong>
+        <span className="meta">{artist.releases.length ? `${artist.releases.length} release${artist.releases.length === 1 ? '' : 's'}` : 'Bosque Records'}</span>
+      </TransitionLink>
+    </SpotlightCard>
   )
 }
 
@@ -49,7 +61,18 @@ export function ArtistPage() {
         {portrait ? <img src={portrait} alt="" style={{ viewTransitionName: `artist-${artist.id}` }} /> : null}
         <div>
           <h1>{artist.name}</h1>
-          <p className="lede">A published biography is not on file.</p>
+          <ScrollReveal
+            tag="p"
+            effect="fade"
+            mode="enter"
+            splitBy="words"
+            enableBlur={false}
+            baseOpacity={0.22}
+            stagger={0.03}
+            containerClassName="lede"
+          >
+            A published biography is not on file.
+          </ScrollReveal>
           {projects.length ? <p>{samePersonNote}</p> : null}
           {projects.map((project) => (
             <p key={project.id}><TransitionLink to={`/artists/${project.id}`}>{project.name}</TransitionLink></p>

@@ -63,19 +63,58 @@ export function setTintFrom(id: string) {
   let hash = 0
   for (let i = 0; i < id.length; i += 1) hash = (hash * 33 + id.charCodeAt(i)) >>> 0
   atmosphere.tint = palette[hash % palette.length]
+  listeners.forEach((listener) => listener())
 }
 
 export function setAtmosphereEnergy(energy: number) {
   atmosphere.energy = energy
+  listeners.forEach((listener) => listener())
+}
+
+function subscribeAtmosphere(listener: () => void) {
+  listeners.add(listener)
+  return () => listeners.delete(listener)
 }
 
 export function useAtmosphereLevel() {
   return useSyncExternalStore(
-    (listener) => {
-      listeners.add(listener)
-      return () => listeners.delete(listener)
-    },
+    subscribeAtmosphere,
     () => atmosphere.level,
     () => 'on' as AtmosphereLevel
+  )
+}
+
+type AtmosphereSnapshot = {
+  level: AtmosphereLevel
+  tint: [number, number, number]
+  energy: number
+}
+
+let snapshot: AtmosphereSnapshot = {
+  level: atmosphere.level,
+  tint: atmosphere.tint,
+  energy: atmosphere.energy
+}
+
+function readSnapshot(): AtmosphereSnapshot {
+  if (
+    snapshot.level !== atmosphere.level
+    || snapshot.tint !== atmosphere.tint
+    || snapshot.energy !== atmosphere.energy
+  ) {
+    snapshot = {
+      level: atmosphere.level,
+      tint: atmosphere.tint,
+      energy: atmosphere.energy
+    }
+  }
+  return snapshot
+}
+
+export function useAtmosphereSnapshot() {
+  return useSyncExternalStore(
+    subscribeAtmosphere,
+    readSnapshot,
+    readSnapshot
   )
 }

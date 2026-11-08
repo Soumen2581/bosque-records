@@ -4,6 +4,7 @@ import concilium from '@/assets/events/concilium.jpg'
 import abduction from '@/assets/events/abduction.jpg'
 import synnergia from '@/assets/events/synnergia.jpg'
 import n3xu5 from '@/assets/events/n3xu5.jpg'
+import gates from '@/assets/events/gates-to-xibalba.jpg'
 import { portraits } from '@/data/portraits'
 
 export interface EventArtist {
@@ -60,7 +61,7 @@ export const labelEvents: LabelEvent[] = [
     start: '2026-06-20',
     end: '2026-06-21',
     place: 'Silk Bar & Lounge, 10255 Chapel Hill Road, Morrisville, North Carolina',
-    detail: 'Bosque Records gathering marking two years of the label. Doors at 6:00pm on June 20.',
+    detail: 'Bosque Records gathering marking two years of the label. Psychedelic décor, UV body painting, and art vendors. Doors from 9:00pm on June 20.',
     lineup: [
       'N3xu5, live',
       'Archetypes, live',
@@ -71,7 +72,7 @@ export const labelEvents: LabelEvent[] = [
       'Raffidelic, DJ',
       'Skrapz, DJ'
     ],
-    images: [concilium],
+    images: [concilium, portraits.ixmuk],
     artists: [
       face('foe-xan', 'Foe’Xan'),
       face('n3xu5', 'N3xu5', n3xu5),
@@ -79,6 +80,32 @@ export const labelEvents: LabelEvent[] = [
       face('ixmuk', 'IxMuk')
     ],
     instagram: 'https://www.instagram.com/bosque.records/reel/DZedJHFODBz/'
+  },
+  {
+    id: 'gates-to-xibalba',
+    title: 'Gates to Xibalba: The Return',
+    start: '2025-10-31',
+    end: '2025-11-02',
+    place: '9703 FM 20, Dale, Texas',
+    detail: 'Two-stage open-air psytrance festival presented by Dimensional Mayan Tribe. Bosque artists Brainwavez and IxMuk appear on the posted lineup.',
+    lineup: [
+      'Brainwavez',
+      'IxMuk',
+      'Foe’Xan',
+      'Ghost Noize',
+      'Xhanok',
+      'Cosmik Frequency'
+    ],
+    images: [gates, portraits.brainwavez],
+    artists: [
+      face('brainwavez', 'Brainwavez'),
+      face('ixmuk', 'IxMuk'),
+      face('foe-xan', 'Foe’Xan'),
+      face('ghost-noize', 'Ghost Noize'),
+      face('xhanok', 'Xhanok'),
+      face('cosmik-frequency', 'Cosmik Frequency')
+    ],
+    instagram: 'https://www.instagram.com/dimensional.mayan.tribe/'
   },
   {
     id: 'cosmica-campout',
@@ -136,6 +163,8 @@ export const labelEvents: LabelEvent[] = [
     instagram: 'https://www.instagram.com/bosque.records/reel/DFP93cgxXLl/'
   }
 ]
+
+labelEvents.sort((a, b) => b.start.localeCompare(a.start) || a.title.localeCompare(b.title))
 
 export function formatEventDate(event: LabelEvent) {
   const start = new Date(`${event.start}T00:00:00`)

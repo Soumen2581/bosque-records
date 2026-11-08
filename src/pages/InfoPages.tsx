@@ -1,5 +1,6 @@
-import { type ChangeEvent, type FormEvent, useState } from 'react'
+import { type ChangeEvent, type FormEvent, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Masonry, ScrollReveal } from '@/bits'
 import { Reveal } from '@/components/Reveal'
 import { TransitionLink } from '@/components/TransitionLink'
 import { label } from '@/config/label'
@@ -18,10 +19,12 @@ export function AboutPage() {
       </header>
       <Reveal as="section" className="story-band about-band">
         <div className="story-copy">
-          <h2>Published through Bandcamp</h2>
-          <p className="lede">
+          <ScrollReveal tag="h2" effect="rise" mode="scrub" splitBy="words" enableBlur baseOpacity={0.15} blurStrength={2} stagger={0.04}>
+            Published through Bandcamp
+          </ScrollReveal>
+          <ScrollReveal tag="p" effect="fade" mode="scrub" splitBy="words" enableBlur={false} baseOpacity={0.2} stagger={0.02} containerClassName="lede">
             Releases, artists, and gatherings on this site come from the label catalog and public posts. Further history is added only when it can be sourced.
-          </p>
+          </ScrollReveal>
           <div className="actions">
             <a className="btn solid" href={label.links.bandcamp} target="_blank" rel="noreferrer">Bandcamp</a>
             <TransitionLink className="btn" to="/contact">Contact</TransitionLink>
@@ -122,6 +125,20 @@ export function ShopPage() {
 }
 
 export function VisualPage() {
+  const items = useMemo(
+    () => releases.map((release) => ({
+      id: release.id,
+      img: release.coverImage,
+      width: 1000,
+      height: 1000,
+      title: release.title,
+      description: `${release.artist.name} · Bosque Records artwork`,
+      alt: `${release.title} cover art`,
+      url: `/releases/${release.slug}`
+    })),
+    []
+  )
+
   return (
     <div className="page">
       <header className="page-head">
@@ -130,16 +147,24 @@ export function VisualPage() {
           Label artwork as it appears on published releases. Separate artwork credits appear here when the label publishes them.
         </p>
       </header>
-      <div className="visual-gallery">
-        {releases.map((release) => (
-          <TransitionLink key={release.id} to={`/releases/${release.slug}`} className="visual-tile">
-            <img src={release.coverImage} alt="" style={{ viewTransitionName: `art-${release.slug}` }} />
-            <span>
-              <strong>{release.title}</strong>
-              <em>{release.artist.name}</em>
-            </span>
-          </TransitionLink>
-        ))}
+      <div className="visual-masonry">
+        <Masonry
+          items={items}
+          columns="auto"
+          columnWidth={240}
+          gap={14}
+          radius={4}
+          animateFrom="bottom"
+          stagger={0.04}
+          duration={0.55}
+          bounce={0}
+          blurToFocus
+          revealOnScroll
+          hoverEffect="lift"
+          captions="hover"
+          lightbox
+          draggable={false}
+        />
       </div>
     </div>
   )
